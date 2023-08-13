@@ -5,12 +5,13 @@ import verifyJWT from "./utilities/verifyJWT";
 export async function middleware(request) {
   const path = request.nextUrl.pathname;
 
-  const isProtectedPath = path === "/dashboard" || path === "/";
+  const isProtectedPath =
+    path === "/dashboard"  || path === "/dashboard/category"|| path === "/dashboard/menu-items";
   const isPublicPath = path === "/login" || path === "/sign-up";
-  
 
   try {
-    const token = request.cookies.get(process.env.LOGIN_COOKIE_NAME)?.value || "";
+    const token =
+      request.cookies.get(process.env.LOGIN_COOKIE_NAME)?.value || "";
     const verifiedToken = await verifyJWT(
       token,
       process.env.ACCESS_TOKEN_SECRET
@@ -30,5 +31,5 @@ export async function middleware(request) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/login", "/sign-up", "/dashboard"],
+  matcher: ["/", "/login", "/sign-up", "/dashboard", "/dashboard/category", "/dashboard/menu-items"],
 };

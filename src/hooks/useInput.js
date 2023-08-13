@@ -9,7 +9,7 @@ const useInput = (fields) => {
       [e.target.name]: e.target.value,
     }));
   };
-  return {input, inputChangeHandler};
+  return {input, inputChangeHandler,setInput};
 };
 
 export default useInput;

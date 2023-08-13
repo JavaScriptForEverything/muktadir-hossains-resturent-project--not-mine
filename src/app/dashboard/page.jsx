@@ -1,13 +1,11 @@
-import Header from '@/components/Header'
-import React from 'react'
+import React from "react";
 
 const Dashboard = () => {
   return (
-    <div>
-      {/* <Header/> */}
-      dashboard
-    </div>
-  )
-}
+    <>
+     <h2>Hello Dashboard</h2>
+    </>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
