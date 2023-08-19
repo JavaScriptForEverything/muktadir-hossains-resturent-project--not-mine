@@ -17,10 +17,20 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import LogoutIcon from "@mui/icons-material/Logout";
 // My imports::
 import Image from "next/image";
 import Link from "next/link";
 import listItems from "@/assets/ListItems";
+import Colors from "@/assets/Colors";
+import { Button } from "@mui/material";
+
+// Log Out Handler::
+const handelLogOut = () => {
+  fetch("/api/users/logout")
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+};
 
 const drawerWidth = 250;
 const openedMixin = (theme) => ({
@@ -109,16 +119,23 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
+      <AppBar
+        sx={{ backgroundColor: Colors.primary }}
+        position="fixed"
+        open={open}
+      >
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handelDrawerToggle}
             edge="start"
-            sx={{
-              marginRight: 5,
-            }}
           >
             {open ? <MenuIcon /> : <ChevronRightIcon />}
           </IconButton>
@@ -126,6 +143,19 @@ export default function MiniDrawer() {
           <Typography variant="h6" noWrap component="div">
             Restaurant Management System
           </Typography>
+
+          <Button
+            style={{
+              color: Colors.white,
+              fontWeight: 700,
+              backgroundColor: "#6D28D9",
+            }}
+            variant="contained"
+            endIcon={<LogoutIcon />}
+            onClick={handelLogOut}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -158,11 +188,10 @@ export default function MiniDrawer() {
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
-                    backgroundColor:
-                      El.active === true && theme.palette.primary.main,
+                    fontWeight: 700,
+                    backgroundColor: El.active === true && Colors.primary,
                     "&:hover": {
-                      backgroundColor:
-                        El.active === true && theme.palette.primary.main,
+                      backgroundColor: El.active === true && Colors.primary,
                     },
                   }}
                 >
@@ -171,13 +200,18 @@ export default function MiniDrawer() {
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
+                      color: El.active === true && Colors.white,
                     }}
                   >
                     {El.icon}
                   </ListItemIcon>
                   <ListItemText
                     primary={El.title}
-                    sx={{ opacity: open ? 1 : 0 }}
+                    sx={{
+                      opacity: open ? 1 : 0,
+                      color: El.active === true && Colors.white,
+                      fontWeight: "bold",
+                    }}
                   />
                 </ListItemButton>
               </Link>

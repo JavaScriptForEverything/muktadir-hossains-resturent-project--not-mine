@@ -15,7 +15,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
 import axios from "axios";
 
-export default function MenuItemDataTable({ data, fetchData }) {
+export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -28,12 +28,12 @@ export default function MenuItemDataTable({ data, fetchData }) {
     setPage(0);
   };
 
-  // delete Category Handler::
-  const deleteCategoryHandler = async (id) => {
+  // delete Menu Items Handler::
+  const deleteMenuItemHandler = async (id) => {
     try {
-      const res = await axios.delete(`/api/category/${id}`);
+      const res = await axios.delete(`/api/menu-items/${id}`);
       if (res.status === 200) {
-        fetchData();
+        fetchAllMenuItems();
         alert("Deleted Successfully");
       }
     } catch (error) {
@@ -137,7 +137,7 @@ export default function MenuItemDataTable({ data, fetchData }) {
                         <SaveAsRoundedIcon color="warning" />
                       </IconButton>
                       <IconButton
-                        onClick={() => deleteCategoryHandler(row._id)}
+                        onClick={() => deleteMenuItemHandler(row._id)}
                         aria-label="view"
                         size="large"
                       >

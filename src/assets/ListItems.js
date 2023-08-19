@@ -2,6 +2,9 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ListIcon from "@mui/icons-material/List";
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
+import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
+
 
 const listItems = [
   {
@@ -30,6 +33,20 @@ const listItems = [
     title: "Menu Items",
     link: "/dashboard/menu-items",
     icon: <DinnerDiningIcon />,
+    active: false,
+  },
+  {
+    id: 5,
+    title: "Table",
+    link: "/dashboard/table",
+    icon: <TableRestaurantIcon />,
+    active: false,
+  },
+  {
+    id: 6,
+    title: "Order",
+    link: "/dashboard/order",
+    icon: <SoupKitchenIcon />,
     active: false,
   },
 ];

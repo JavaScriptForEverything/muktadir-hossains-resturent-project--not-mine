@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.MuiBox-root{
+  padding-bottom: 0 !important;
+}
+
+/* ===========================
+Copy Right Section design:: 
+==============================
+*/
+.copyRightSection{
+  /* position: fixed;
+  bottom: 0; */
+  background-color: white;
+  /* padding-bottom: 10px; */
+}
+.copyRightSection p{
+  display: block;
+  text-align: left;
+  font-size: 12px;
+  padding-bottom: 10px;
+  padding-top: 5px;
+
+}
+
+/* ===========================
+Table Design Section in dashboard/table Page:: 
+==============================
+*/
+
+.table__body{
+  position: relative;
+}
+.cross__bar{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

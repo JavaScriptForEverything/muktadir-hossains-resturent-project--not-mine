@@ -1,13 +1,14 @@
 "use client";
 import axios from "axios";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import useInput from "@/hooks/useInput";
 
 const SignUp = () => {
   const router = useRouter();
+    const [isSendingRequest, setIsSendingRequest] = useState(false);
 
   const FromInitialData = {
     firstName: "",
@@ -23,6 +24,7 @@ const SignUp = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
+      setIsSendingRequest(true);
       const res = await axios.post(
         "http://localhost:3000/api/users/sign-up",
         fromData
@@ -47,6 +49,8 @@ const SignUp = () => {
         position: "top-right", // Toast position (top-left, top-right, bottom-left, bottom-right)
       });
       router.refresh();
+    }finally{
+      setIsSendingRequest(false)
     }
   };
 
@@ -170,7 +174,7 @@ const SignUp = () => {
           </div>
           <div className="flex justify-center">
             <button className="bg-green-500 hover:bg-green-600  rounded px-5 py-2 mt-5 text-sm font-semibold transition-colors">
-              Sign Up
+              {isSendingRequest ? "Singing Up..." : "Sign Up"}
             </button>
           </div>
           <div className="mt-5 flex justify-between">

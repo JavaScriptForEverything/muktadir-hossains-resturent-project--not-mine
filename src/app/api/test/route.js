@@ -1,0 +1,23 @@
+import connectToDB from "@/config/connectDb";
+import Category from "@/models/categoryModel";
+import getFullFoodMenu from "@/utilities/getFullFoodMenu";
+import { NextResponse } from "next/server";
+
+connectToDB();
+
+export const GET = async () => {
+  try {
+    // Get All food items from the database with Aggregation::
+    const menuData = await getFullFoodMenu();
+    return NextResponse.json({
+      success: true,
+      message: "Test API is working fine",
+      menuData,
+    });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({
+      error: error.message,
+    });
+  }
+};

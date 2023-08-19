@@ -18,7 +18,7 @@ const style = {
   p: 4,
 };
 
-export default function CreateMenuItemModal() {
+export default function CreateMenuItemModal({fetchAllMenuItems}) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -84,6 +84,7 @@ export default function CreateMenuItemModal() {
 
       console.log(response);
       if (response.status === 200) {
+        fetchAllMenuItems()
         setInput(initialInputObject);
         setOpen(false)
       }

@@ -7,7 +7,7 @@ connectToDB();
 // Get ALL the Categories From API::
 export const GET = async (req, res) => {
   try {
-    const category = await Category.find();
+    const category = await Category.find({}, "-createdAt -updatedAt -__v").exec();
     // console.log(category);
     return NextResponse.json(
       {
