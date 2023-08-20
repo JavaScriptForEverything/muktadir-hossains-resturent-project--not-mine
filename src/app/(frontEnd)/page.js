@@ -12,7 +12,7 @@ export default async function Home() {
   const allFoodItems = await getFullFoodMenu();
 
   return (
-    <main className="min-h-screen bg-slate-100">
+    <main className="min-h-screen bg-slate-100 relative">
       <NavBar />
       <OrderSectionWrapper allFoodItems={allFoodItems}/>
     </main>

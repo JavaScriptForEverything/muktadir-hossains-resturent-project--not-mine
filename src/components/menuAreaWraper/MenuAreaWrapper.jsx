@@ -1,9 +1,8 @@
-import React from 'react'
 import FoodItemCard from '../FoodItemCard';
 
 const MenuAreaWrapper = ({allFoodItems,addToCartHandler}) => {
   return (
-    <section className="container mx-auto w-9/12">
+    <section className="container mx-auto w-9/12 md:pb-2 pb-20">
     <h2 className="text-center font-bold text-4xl mb-5">
       Explore Food by category
     </h2>

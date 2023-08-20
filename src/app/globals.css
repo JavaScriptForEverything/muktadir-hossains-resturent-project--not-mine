@@ -45,6 +45,39 @@ Table Design Section in dashboard/table Page::
   text-align: center;
 }
 
+/* 
+==== *** ===== *** ====
+  Scrollbar Design::
+==== *** ===== *** ====
+*/ 
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ef4444d0; 
+}
+
+/* 
+==== *** ===== *** ====
+  Scrollbar Design::
+==== *** ===== *** ====
+*/
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
