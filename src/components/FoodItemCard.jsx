@@ -2,8 +2,13 @@
 import Image from "next/image";
 import { IconButton } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { addToCartHandler } from "@/utilities/helperFunctions";
+import { useContext } from "react";
+import CartContext from "@/app/context/cartContext/CartContext";
 
-const FoodItemCard = ({ item ,addToCartHandler}) => {
+const FoodItemCard = ({ item }) => {
+  const {cartData,setCartData} = useContext(CartContext)
+
   const { title, description, price, images, _id: id } = item;
   const imgUrl = images[0].replace("http://localhost:3000", "");
   return (
@@ -35,7 +40,7 @@ const FoodItemCard = ({ item ,addToCartHandler}) => {
           color="error"
           size="small"
           aria-label="add to shopping cart"
-          onClick={() => addToCartHandler(item)}
+          onClick={() => addToCartHandler(item,cartData,setCartData)}
         >
           <AddShoppingCartIcon sx={{ fontSize: 16 }}/>
           {/* <AddIcon fontSize="small" /> */}

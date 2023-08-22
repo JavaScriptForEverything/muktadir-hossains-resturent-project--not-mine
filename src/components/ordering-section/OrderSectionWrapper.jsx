@@ -1,37 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import MenuAreaWrapper from "../menuAreaWraper/MenuAreaWrapper";
 import Cart from "../cart/Cart";
 import SmallScreenCartBtn from "../cart/SmallScreenCartBtn";
+import CartContext from "@/app/context/cartContext/CartContext";
 
 const OrderSectionWrapper = ({ allFoodItems }) => {
-
-  const [cartData, setCartData] = useState([]);
-  // Show Cart Badge count Function::
-  const getTotalCartItemsNumber = () => {
-    let totalItems = 0;
-    cartData.forEach((item) => {
-      const count = item.quantity * 1;
-      totalItems = totalItems + count;
-    });
-    return totalItems;
-  };
-
-  //Add Items to CART handler::
-  const addToCartHandler = (product) => {
-    const existingCartItem = cartData.find((item) => item._id === product._id);
-
-    if (existingCartItem) {
-      const updatedCartItems = cartData.map((item) =>
-        item._id === product._id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
-      setCartData(updatedCartItems);
-    } else {
-      setCartData([...cartData, { ...product, quantity: 1 }]);
-    }
-  };
+  const { cartData, setCartData } = useContext(CartContext);
 
   // Decrement cart item quantity Handler::
   const decrementCartQuantity = (productId) => {
@@ -53,25 +28,19 @@ const OrderSectionWrapper = ({ allFoodItems }) => {
     setCartData(updatedCartItems);
   };
 
-
   return (
     <div className="flex justify-between ">
       {/* All Food Items category:: */}
       <MenuAreaWrapper
-        addToCartHandler={addToCartHandler}
         allFoodItems={allFoodItems}
       />
       {/* Right Side Cart:: */}
       <Cart
+        setCartData={setCartData}
         cartData={cartData}
-        addToCartHandler={addToCartHandler}
-        decrementCartQuantity={decrementCartQuantity}
-        removeCartItem={removeCartItem}
       />
-
       {/* Small Screen Cart Button :: */}
       <SmallScreenCartBtn cartData={cartData} />
-
     </div>
   );
 };

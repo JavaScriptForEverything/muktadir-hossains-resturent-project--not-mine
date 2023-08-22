@@ -1,6 +1,6 @@
 import FoodItemCard from '../FoodItemCard';
 
-const MenuAreaWrapper = ({allFoodItems,addToCartHandler}) => {
+const MenuAreaWrapper = ({allFoodItems}) => {
   return (
     <section className="container mx-auto w-9/12 md:pb-2 pb-20">
     <h2 className="text-center font-bold text-4xl mb-5">
@@ -21,7 +21,9 @@ const MenuAreaWrapper = ({allFoodItems,addToCartHandler}) => {
             const plainItem = item.toJSON
               ? item.toJSON()
               : JSON.parse(JSON.stringify(item));
-            return <FoodItemCard addToCartHandler={addToCartHandler} item={plainItem} key={item._id} />;
+            return <FoodItemCard 
+            // addToCartHandler={addToCartHandler} 
+            item={plainItem} key={item._id} />;
           })}
         </div>
       </div>

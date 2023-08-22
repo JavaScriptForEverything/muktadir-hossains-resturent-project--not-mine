@@ -15,7 +15,7 @@ export const POST = async (req, res) => {
     const subTotal = calculateSubtotal(reqData.orderItems);
 
     // GET Configurations Info & Extract VAT percentage::
-    const {vat:vatPercentage} = await Configuration.findOne(); 
+    const {vatPercentage} = await Configuration.findOne(); 
 
     // Calculating VAT::
     const vat =  (vatPercentage) ? (subTotal * vatPercentage) / 100 : 0;

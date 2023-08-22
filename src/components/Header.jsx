@@ -24,13 +24,7 @@ import Link from "next/link";
 import listItems from "@/assets/ListItems";
 import Colors from "@/assets/Colors";
 import { Button } from "@mui/material";
-
-// Log Out Handler::
-const handelLogOut = () => {
-  fetch("/api/users/logout")
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
-};
+import { useRouter } from "next/navigation";
 
 const drawerWidth = 250;
 const openedMixin = (theme) => ({
@@ -99,6 +93,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function MiniDrawer() {
+  const router = useRouter();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
@@ -114,6 +109,16 @@ export default function MiniDrawer() {
   };
   const handelDrawerToggle = () => {
     setOpen(!open);
+  };
+
+  // Log Out Handler::
+  const handelLogOut = () => {
+    fetch("/api/users/logout")
+      .then((res) => {
+        console.log(res)
+        res.statusCode === 200 && router.push("/login");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
