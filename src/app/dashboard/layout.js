@@ -11,9 +11,9 @@ const DashboardLayout = ({ children }) => {
           {/* ==  Main Area Starts == */}
           {children}
           {/* ==  Main Area Ends == */}
-          <footer className="copyRightSection font-mono w-full">
+          <footer className="bg-white font-mono w-full">
             <hr />
-            <p>
+            <p className="copyRightText text-left">
               Copyright © {new Date().getFullYear()} | Developed & Maintained By{" "}
               <a className="text-violet-500 underline" href="https://rajit.net" target="_blank">
                 rajIT Solutions Ltd

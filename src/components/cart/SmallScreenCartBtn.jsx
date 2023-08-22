@@ -2,6 +2,7 @@
 import { calculateSubtotal } from "@/utilities/helperFunctions";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Colors from "@/assets/Colors";
 
 const SmallScreenCartBtn = ({ cartData }) => {
   // Show Cart Badge count Function::
@@ -20,12 +21,12 @@ const SmallScreenCartBtn = ({ cartData }) => {
         badgeContent={cartData.length > 0 ? getTotalCartItemsNumber() : 0}
         color="primary"
       >
-        <ShoppingCartIcon color="action" />
+        <ShoppingCartIcon sx={{color: Colors.white,fontSize:30}} />
       </Badge>
       <button className="text-xl font-mono ring-2 ring-white px-3 py-2 rounded-md text-white shadow-md  shadow-black hover:shadow-2xl ">
         View Cart
       </button>
-      <p>tk {calculateSubtotal(cartData)}</p>
+      <p className="text-white font-bold">Tk. {calculateSubtotal(cartData)}</p>
     </div>
   );
 };

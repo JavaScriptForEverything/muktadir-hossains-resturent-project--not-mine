@@ -6,11 +6,7 @@ import SmallScreenCartBtn from "../cart/SmallScreenCartBtn";
 
 const OrderSectionWrapper = ({ allFoodItems }) => {
 
-  
-
-
   const [cartData, setCartData] = useState([]);
-
   // Show Cart Badge count Function::
   const getTotalCartItemsNumber = () => {
     let totalItems = 0;
@@ -38,7 +34,6 @@ const OrderSectionWrapper = ({ allFoodItems }) => {
   };
 
   // Decrement cart item quantity Handler::
-
   const decrementCartQuantity = (productId) => {
     const updatedCartItems = cartData.map((item) => {
       if (item._id === productId) {
@@ -58,14 +53,15 @@ const OrderSectionWrapper = ({ allFoodItems }) => {
     setCartData(updatedCartItems);
   };
 
+
   return (
     <div className="flex justify-between ">
-      
+      {/* All Food Items category:: */}
       <MenuAreaWrapper
         addToCartHandler={addToCartHandler}
         allFoodItems={allFoodItems}
       />
-
+      {/* Right Side Cart:: */}
       <Cart
         cartData={cartData}
         addToCartHandler={addToCartHandler}

@@ -1,16 +1,9 @@
 "use client";
-
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
+import { calculateSubtotal } from "@/utilities/helperFunctions";
 
-// Calculate Sub total Function for CART::
-const calculateSubtotal = (cartData) => {
-  return cartData.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-};
 
 const Cart = ({
   cartData,
@@ -83,6 +76,7 @@ const Cart = ({
             </h3>
           )}
         </div>
+        {/* Calculation Section:: */}
         <hr className="my-2" />
         <div className="flex justify-between">
           <p className="text-sm font-medium">SubTotal:</p>
@@ -100,7 +94,10 @@ const Cart = ({
             Tk.
           </p>
         </div>
-        <button className="bg-red-600 hover:bg-red-700 rounded-md py-2 px-5 text-white font-mono block mx-auto mt-4 ">
+        <button 
+        onClick={() => console.log(cartData)}
+        className="bg-red-600 hover:bg-red-700 rounded-md py-2 px-5 text-white font-mono block mx-auto mt-4 ">
+
           Confirm Order
         </button>
       </div>

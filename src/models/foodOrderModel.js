@@ -1,15 +1,16 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
+import MenuItems from "./menuItemsModel";
 
-const foodOrderSchema = new Mongoose.Schema(
+const foodOrderSchema = new mongoose.Schema(
   {
     TableCode: {
       type: String,
-      require: [true, "Must Provide the TableCode"],
       trim: true,
     },
     numberOfGuest: {
       type: Number,
       required: [true, "Must Provide Number of Guest"],
+      default: 1,
       minValue: 1,
     },
     SubTotalPrice: {
@@ -32,11 +33,11 @@ const foodOrderSchema = new Mongoose.Schema(
     },
     orderItems: [
       {
-        ItemName: {
+        title: {
           type: String,
           required: [true, "Must Provide the Food Item's Name."],
         },
-        ItemCode: {
+        itemCode: {
           type: String,
           required: [true, "Must Provide the Food Item's Code."],
         },
@@ -48,7 +49,7 @@ const foodOrderSchema = new Mongoose.Schema(
           type: Number,
           required: true,
         },
-        foodItems: {
+        foodItemUID: {
           type: mongoose.Schema.ObjectId,
           ref: "MenuItems",
           required: true,
@@ -66,5 +67,43 @@ const foodOrderSchema = new Mongoose.Schema(
   }
 );
 
+// pre-save middleware
+foodOrderSchema.pre("save", async function (next) {
+  try {
+    const MenuItem = mongoose.models.MenuItems;
+
+    for (const orderItem of this.orderItems) {
+      const menuItem = await MenuItem.findOne({
+        _id: orderItem.foodItemUID,
+        price: orderItem.price,
+        title: orderItem.title,
+        itemCode: orderItem.itemCode,
+      });
+
+      if (!menuItem) {
+        let errorMessage = `Food item with ID "${orderItem.foodItemUID}" not found.`;
+
+        if (menuItem && menuItem.price !== orderItem.price) {
+          errorMessage = `Food item with ID "${orderItem.foodItemUID}" found, but the price doesn't match.`;
+        } else if (menuItem && menuItem.title !== orderItem.title) {
+          errorMessage = `Food item with ID "${orderItem.foodItemUID}" found, but the title doesn't match.`;
+        } else if (menuItem && menuItem.itemCode !== orderItem.itemCode) {
+          errorMessage = `Food item with ID "${orderItem.foodItemUID}" found, but the itemCode doesn't match.`;
+        }
+
+        throw new Error(errorMessage);
+      }
+    }
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 // Create a Model with The order Schema ::
 const Order = mongoose.models.Order || mongoose.model("Order", foodOrderSchema);
+
+export default Order;

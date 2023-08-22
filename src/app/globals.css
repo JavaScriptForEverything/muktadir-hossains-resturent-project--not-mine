@@ -11,15 +11,9 @@
 Copy Right Section design:: 
 ==============================
 */
-.copyRightSection{
-  /* position: fixed;
-  bottom: 0; */
-  background-color: white;
-  /* padding-bottom: 10px; */
-}
-.copyRightSection p{
+.copyRightText{
   display: block;
-  text-align: left;
+  /* text-align: left; */
   font-size: 12px;
   padding-bottom: 10px;
   padding-top: 5px;
