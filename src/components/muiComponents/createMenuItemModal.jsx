@@ -25,8 +25,6 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
 
   const [allCategory, setAllCategory] = useState([]);
 
-  console.log(allCategory);
-
   const getAllCategory = async () => {
     try {
       const response = await axios.get("/api/category");

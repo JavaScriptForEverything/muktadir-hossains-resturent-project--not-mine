@@ -16,7 +16,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import DashboardIcon from "@mui/icons-material/Dashboard";
 import LogoutIcon from "@mui/icons-material/Logout";
 // My imports::
 import Image from "next/image";
@@ -24,7 +23,8 @@ import Link from "next/link";
 import listItems from "@/assets/ListItems";
 import Colors from "@/assets/Colors";
 import { Button } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
+import axios from "axios";
 
 const drawerWidth = 250;
 const openedMixin = (theme) => ({
@@ -94,31 +94,24 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
   const router = useRouter();
+  const pathname = usePathname();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
   const [list, setList] = React.useState(listItems);
-  const handelChangeColor = (El) => {
-    setList((prevList) =>
-      prevList.map((item) =>
-        item.id === El.id
-          ? { ...item, active: true }
-          : { ...item, active: false }
-      )
-    );
-  };
+
   const handelDrawerToggle = () => {
     setOpen(!open);
   };
 
   // Log Out Handler::
-  const handelLogOut = () => {
-    fetch("/api/users/logout")
-      .then((res) => {
-        console.log(res)
-        res.statusCode === 200 && router.push("/login");
-      })
-      .catch((err) => console.log(err));
+  const handelLogOut = async () => {
+    try {
+      const res = await axios.get(`/api/users/logout`);
+      res.status === 200 && router.push("/login");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -187,16 +180,16 @@ export default function MiniDrawer() {
           )}
           {list.map((El, Idx) => (
             <ListItem key={Idx} disablePadding sx={{ display: "block" }}>
-              <Link href={El.link} onClick={() => handelChangeColor(El)}>
+              <Link href={El.link}>
                 <ListItemButton
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
                     fontWeight: 700,
-                    backgroundColor: El.active === true && Colors.primary,
+                    backgroundColor: El.link === pathname && Colors.primary,
                     "&:hover": {
-                      backgroundColor: El.active === true && Colors.primary,
+                      backgroundColor: El.link === pathname && Colors.primary,
                     },
                   }}
                 >
@@ -205,7 +198,7 @@ export default function MiniDrawer() {
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
-                      color: El.active === true && Colors.white,
+                      color: El.link === pathname && Colors.white,
                     }}
                   >
                     {El.icon}
@@ -214,7 +207,7 @@ export default function MiniDrawer() {
                     primary={El.title}
                     sx={{
                       opacity: open ? 1 : 0,
-                      color: El.active === true && Colors.white,
+                      color: El.link === pathname && Colors.white,
                       fontWeight: "bold",
                     }}
                   />
