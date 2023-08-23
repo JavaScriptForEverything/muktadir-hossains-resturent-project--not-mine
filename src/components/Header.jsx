@@ -138,15 +138,16 @@ export default function MiniDrawer() {
             {open ? <MenuIcon /> : <ChevronRightIcon />}
           </IconButton>
 
-          <Typography variant="h6" noWrap component="div">
-            Restaurant Management System
+          <Typography className="font-mono" variant="h6" noWrap component="div">
+          Restaurant Management System
           </Typography>
 
           <Button
             style={{
               color: Colors.white,
-              fontWeight: 700,
+              fontWeight: 600,
               backgroundColor: "#6D28D9",
+              fontSize: 12
             }}
             variant="contained"
             endIcon={<LogoutIcon />}
@@ -174,7 +175,7 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {open && (
-            <Typography ml={3} component={"p"}>
+            <Typography className="font-mono text-violet-600" ml={3} component={"p"}>
               Dashboard
             </Typography>
           )}
