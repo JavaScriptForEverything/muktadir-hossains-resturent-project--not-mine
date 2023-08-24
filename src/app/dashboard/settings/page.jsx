@@ -6,9 +6,13 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { LoadingButton } from "@mui/lab";
 import SaveIcon from "@mui/icons-material/Save";
+import { fetchApiData } from "@/utilities/helperFunctions";
 
 const Settings = () => {
   const [loading, setLoading] = useState(false);
+  const [configuration, setConfiguration] = useState({});
+
+  console.log("configuration::", configuration?.discount?.type);
 
   // Initial From Values::
   const initialData = {
@@ -21,9 +25,12 @@ const Settings = () => {
   const { input, inputChangeHandler, setInput } = useInput(initialData);
 
   // GET Configurations from the DB::
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {
+    // fetch configuration from the DB::
+    const configurations = fetchApiData(`/api/configurations`).then((apiData) =>
+      setConfiguration(apiData?.configurations)
+    );
+  }, []);
 
   // Submit Button Handler::
   const handelSaveButton = async () => {
@@ -48,7 +55,7 @@ const Settings = () => {
           "& > :first-child": { m: 2, width: "53.5ch" },
         }}
         noValidate
-        autoComplete="off"
+        // autoComplete="off"
       >
         <TextField
           error={false}
@@ -57,7 +64,7 @@ const Settings = () => {
           name="vatPercentage"
           id="outlined-error"
           label="VAT Percentage (%)"
-          defaultValue={0}
+          defaultValue={configuration?.vatPercentage ? configuration.vatPercentage : 0}
         />
         <br />
         <TextField
@@ -67,7 +74,9 @@ const Settings = () => {
           name="discount"
           id="outlined-error"
           label="Discount"
-          defaultValue={0}
+          defaultValue={
+            configuration?.discount?.value ? configuration?.discount?.value : 0
+          }
         />
 
         <TextField
@@ -75,7 +84,7 @@ const Settings = () => {
           id="outlined-select-currency"
           select
           label="Select Discount Type"
-          defaultValue="percentage"
+          defaultValue={configuration?.discount?.type ? configuration?.discount?.type : "percentage"}
         >
           <MenuItem value="fixed">Fixed</MenuItem>
           <MenuItem value="percentage">Percentage</MenuItem>

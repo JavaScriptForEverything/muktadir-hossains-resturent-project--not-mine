@@ -6,7 +6,10 @@ export async function middleware(request) {
   const path = request.nextUrl.pathname;
 
   const isProtectedPath =
-    path === "/dashboard"  || path === "/dashboard/category"|| path === "/dashboard/menu-items";
+    path === "/dashboard" ||
+    path === "/dashboard/category" ||
+    path === "/dashboard/menu-items" ||
+    path === "/dashboard/settings";
   const isPublicPath = path === "/login" || path === "/sign-up";
 
   try {
@@ -31,5 +34,13 @@ export async function middleware(request) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/login", "/sign-up", "/dashboard", "/dashboard/category", "/dashboard/menu-items"],
+  matcher: [
+    "/",
+    "/login",
+    "/sign-up",
+    "/dashboard",
+    "/dashboard/category",
+    "/dashboard/menu-items",
+    "/dashboard/settings"
+  ],
 };

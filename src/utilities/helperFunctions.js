@@ -1,3 +1,21 @@
+import axios from "axios";
+
+// FETCH API DATA::
+export const fetchApiData = async(url)=>{
+  try{
+    const apiResponse = await axios.get(url);
+    const jsonData = await apiResponse?.data;
+    return jsonData;
+  }catch(error){
+    return {
+      error: error,
+      errorMessage: error.message,
+    }
+  }
+}
+
+
+
 // Calculate Sub total Function for CART::
 export const calculateSubtotal = (cartData) => {
   return cartData.reduce(
