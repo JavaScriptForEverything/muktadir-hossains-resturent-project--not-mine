@@ -23,7 +23,7 @@ const userSchema = new mongoose.Schema(
           // Custom validation function to check if either email or phoneNumber is provided
           return this.email || this.phoneNumber;
         },
-        message: 'Email or Phone Number is required',
+        message: "Email or Phone Number is required",
       },
     },
     phoneNumber: {
@@ -35,13 +35,22 @@ const userSchema = new mongoose.Schema(
           // Custom validation function to check if either phoneNumber or email is provided
           return this.phoneNumber || this.email;
         },
-        message: 'Email or Phone Number is required',
+        message: "Email or Phone Number is required",
       },
     },
     password: {
       type: String,
       required: true,
       trim: true,
+    },
+    role: {
+      type: "string",
+      lowercase: true,
+      default:"customer",
+      enum: {
+        values: ["admin", "manager", "waiter","chef","customer"],
+        message: "{VALUE} is not supported",
+      },
     },
   },
   {
@@ -55,14 +64,7 @@ const User = mongoose.models.User || mongoose.model("User", userSchema);
 // Export the User model
 export default User;
 
-
-
-
-
-
-
 // import mongoose from "mongoose";
-
 
 // // Define the User Schema::
 // const userSchema = new mongoose.Schema(

@@ -1,41 +1,69 @@
 "use client";
 import { useEffect, useState } from "react";
-import useInput from "@/hooks/useInput";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { LoadingButton } from "@mui/lab";
 import SaveIcon from "@mui/icons-material/Save";
 import { fetchApiData } from "@/utilities/helperFunctions";
+import axios from "axios";
 
 const Settings = () => {
   const [loading, setLoading] = useState(false);
-  const [configuration, setConfiguration] = useState({});
-
-  console.log("configuration::", configuration?.discount?.type);
 
   // Initial From Values::
   const initialData = {
     vatPercentage: 0,
     discount: {
       value: 0,
-      type: "percentage",
+      type: "",
     },
   };
-  const { input, inputChangeHandler, setInput } = useInput(initialData);
-
+  const [configData, setConfigData] = useState(initialData);
+  console.log(configData);
+  // On Change Handler::
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+  
+    if (name === "vatPercentage") {
+      setConfigData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    } else if (name === "discount__amount" || name === "discount__type") {
+      setConfigData((prevState) => ({
+        ...prevState,
+        discount: {
+          ...prevState.discount,
+          [name.split("__")[1]]: value,
+        },
+      }));
+    }
+  };
+  
+  
   // GET Configurations from the DB::
   useEffect(() => {
     // fetch configuration from the DB::
-    const configurations = fetchApiData(`/api/configurations`).then((apiData) =>
-      setConfiguration(apiData?.configurations)
-    );
+    fetch(`/api/configurations`)
+      .then((response) => response.json())
+      .then((data) => {
+        setConfigData({
+          vatPercentage: data?.configurations?.vatPercentage,
+          discount: {
+            value: data?.configurations?.discount?.value,
+            type: data?.configurations?.discount?.type,
+          },
+        });
+      });
   }, []);
 
   // Submit Button Handler::
   const handelSaveButton = async () => {
     try {
-      console.log(input);
+      console.log(configData);
+      const res = await axios.post(`/api/configurations`, configData);
+      console.log(res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -60,22 +88,24 @@ const Settings = () => {
         <TextField
           error={false}
           size="small"
-          onChange={(e) => inputChangeHandler(e)}
+          onChange={(e) => onChangeHandler(e)}
           name="vatPercentage"
           id="outlined-error"
           label="VAT Percentage (%)"
-          defaultValue={configuration?.vatPercentage ? configuration.vatPercentage : 0}
+          defaultValue={
+            configData?.vatPercentage ? configData.vatPercentage : 0
+          }
         />
         <br />
         <TextField
           size="small"
           error={false}
-          onChange={(e) => inputChangeHandler(e)}
-          name="discount"
+          onChange={(e) => onChangeHandler(e)}
+          name="discount__amount"
           id="outlined-error"
           label="Discount"
           defaultValue={
-            configuration?.discount?.value ? configuration?.discount?.value : 0
+            configData?.discount?.value ? configData?.discount?.value : 0
           }
         />
 
@@ -84,7 +114,13 @@ const Settings = () => {
           id="outlined-select-currency"
           select
           label="Select Discount Type"
-          defaultValue={configuration?.discount?.type ? configuration?.discount?.type : "percentage"}
+          onChange={(e) => onChangeHandler(e)}
+          name="discount__type"
+          value={
+            configData?.discount?.type
+              ? configData?.discount?.type
+              : "percentage"
+          }
         >
           <MenuItem value="fixed">Fixed</MenuItem>
           <MenuItem value="percentage">Percentage</MenuItem>
@@ -96,6 +132,7 @@ const Settings = () => {
             loadingPosition="start"
             startIcon={<SaveIcon />}
             variant="outlined"
+            onClick={handelSaveButton}
           >
             Save
           </LoadingButton>

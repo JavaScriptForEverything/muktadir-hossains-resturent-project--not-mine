@@ -25,9 +25,11 @@ const Login = () => {
         from
       );
       console.log(res);
-      if (res.data.success === true && res.data.token) {
+      // && res?.data?.role==="admin"
+      if (res.data.success === true && res?.data?.token) {
         // Save token to cookies with a key 'token' (you can use any key name you prefer)
         // Cookies.set("Ltoken", res.data.token);
+        console.log("ttttttttttt")
         router.push("/dashboard");
       }
     } catch (error) {

@@ -34,7 +34,7 @@ const SignUp = () => {
           duration: 2000, // Duration in milliseconds
           position: "top-right", // Toast position (top-left, top-right, bottom-left, bottom-right)
         });
-        router.push("/");
+        router.push("/login");
         // Show a success toast
       }
       if (res.status === 400 || res.status === 500) {

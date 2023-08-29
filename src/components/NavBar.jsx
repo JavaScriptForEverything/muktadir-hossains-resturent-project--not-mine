@@ -2,9 +2,12 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {usePathname} from "next/navigation"
 
 function NavBar() {
   const [hidden, setHidden] = useState(false);
+  const pathname = usePathname();
+  console.log(pathname);
 
   const navbarToggleButtonHandler = () => {
     setHidden(!hidden);
@@ -62,16 +65,31 @@ function NavBar() {
             <li>
               <Link
                 href="/"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                className={`block py-2 pl-3 pr-4 text-gray-900 rounded 
+                ${pathname !== `/` && "hover:bg-gray-900 dark:hover:bg-gray-700"} 
+                md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500  dark:hover:text-white md:dark:hover:bg-transparent 
+                ${pathname=== "/"&&"md:text-blue-500 bg-blue-700 md:bg-transparent"}`}
                 aria-current="page"
               >
                 Home
               </Link>
             </li>
+            {/* <li>
+              <Link
+                href="/"
+                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                aria-current="page"
+              >
+                Home
+              </Link>
+            </li> */}
             <li>
               <Link
                 href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className={`block py-2 pl-3 pr-4 text-gray-900 rounded 
+                ${pathname !== `/about` && "hover:bg-gray-900 dark:hover:bg-gray-700"} 
+                md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500  dark:hover:text-white md:dark:hover:bg-transparent 
+                ${pathname=== "/about"&&"md:text-blue-500 bg-blue-700 md:bg-transparent"}`}
               >
                 About
               </Link>
@@ -87,7 +105,10 @@ function NavBar() {
             <li>
               <Link
                 href="/cart"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className={`block py-2 pl-3 pr-4 text-gray-900 rounded 
+                ${pathname !== `/cart` && "hover:bg-gray-900 dark:hover:bg-gray-700"} 
+                md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500  dark:hover:text-white md:dark:hover:bg-transparent 
+                ${pathname=== "/cart"&&"md:text-blue-500 bg-blue-700 md:bg-transparent"}`}
               >
                 Cart
               </Link>

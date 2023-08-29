@@ -31,32 +31,30 @@ export const POST = async (req, res) => {
       const token = jwt.sign(
         {
           id: user._id,
-          name: user.firstName +' '+ user.lastName,
+          role: user.role,
+          name: user.firstName + " " + user.lastName,
         },
-        process.env.ACCESS_TOKEN_SECRET,
-        // {
-        //   expiresIn: process.env.JWT_EXPIRY,
-        // }
+        process.env.ACCESS_TOKEN_SECRET
       );
       //   send Response to client::
-      const response =  NextResponse.json(
+      const response = NextResponse.json(
         {
           success: true,
-          token:token,
+          role: user.role, // USER'S ROLE
+          token, // TOKEN
         },
         {
           status: 200,
         }
       );
       response.cookies.set(process.env.LOGIN_COOKIE_NAME, token, {
-        maxAge: process.env.LOGIN_COOKIE_EXPIRY, // in secounds
+        maxAge: process.env.LOGIN_COOKIE_EXPIRY, // in seconds
         httpOnly: true,
         signed: true,
       });
       return response;
     }
   } catch (error) {
-    console.log("an error occurred")
     console.log(error);
     return NextResponse.json(
       {

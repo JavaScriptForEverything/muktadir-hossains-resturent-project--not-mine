@@ -19,6 +19,7 @@ export async function middleware(request) {
       token,
       process.env.ACCESS_TOKEN_SECRET
     );
+    // console.log("Middleware::",verifiedToken)
     // Check if the path is protected or not ::
     if (isPublicPath && verifiedToken) {
       return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
@@ -41,6 +42,6 @@ export const config = {
     "/dashboard",
     "/dashboard/category",
     "/dashboard/menu-items",
-    "/dashboard/settings"
+    "/dashboard/settings",
   ],
 };
