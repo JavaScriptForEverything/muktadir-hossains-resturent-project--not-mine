@@ -4,6 +4,7 @@ import ListIcon from "@mui/icons-material/List";
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 
 
 const listItems = [
@@ -47,6 +48,13 @@ const listItems = [
     title: "Order",
     link: "/dashboard/order",
     icon: <SoupKitchenIcon />,
+    active: false,
+  },
+  {
+    id: 6,
+    title: "Reports",
+    link: "/dashboard/reports",
+    icon: <TextSnippetIcon />,
     active: false,
   },
 ];

@@ -7,7 +7,7 @@ import {usePathname} from "next/navigation"
 function NavBar() {
   const [hidden, setHidden] = useState(false);
   const pathname = usePathname();
-  console.log(pathname);
+
 
   const navbarToggleButtonHandler = () => {
     setHidden(!hidden);

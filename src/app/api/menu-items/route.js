@@ -6,6 +6,9 @@ import MenuItems from "@/models/menuItemsModel";
 
 connectToDB();
 
+
+// Create a Menu Item Controller::
+
 export const POST = async (req, res) => {
   try {
     const formData = await req.formData();
@@ -71,6 +74,8 @@ export const POST = async (req, res) => {
     );
   }
 };
+
+// Get All The Menu Items Controller::
 
 export const GET = async (req, res) => {
   try {

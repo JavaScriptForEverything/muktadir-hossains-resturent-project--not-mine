@@ -34,7 +34,8 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-});
+  boxShadow:"1px 1px 8px #c9c9c9"
+}); 
 
 const closedMixin = (theme) => ({
   transition: theme.transitions.create("width", {
@@ -46,6 +47,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
+  boxShadow:"1px 1px 8px #c9c9c9"
 });
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
@@ -157,7 +159,7 @@ export default function MiniDrawer() {
           </Button>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} >
         <DrawerHeader
           sx={{
             display: "flex",
@@ -180,7 +182,7 @@ export default function MiniDrawer() {
             </Typography>
           )}
           {list.map((El, Idx) => (
-            <ListItem key={Idx} disablePadding sx={{ display: "block" }}>
+            <ListItem key={Idx} disablePadding sx={{ display: "block",}}>
               <Link href={El.link}>
                 <ListItemButton
                   sx={{

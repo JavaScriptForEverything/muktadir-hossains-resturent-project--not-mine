@@ -41,7 +41,7 @@ const FoodItemCard = ({ item }) => {
           color="error"
           size="small"
           aria-label="add to shopping cart"
-          onClick={() => addToCartHandler(item, cartData, setCartData)}
+          onClick={() => addToCartHandler(item, cartData, setCartData,"cartItems")}
         >
           <AddShoppingCartIcon sx={{ fontSize: 16 }} />
         </IconButton>

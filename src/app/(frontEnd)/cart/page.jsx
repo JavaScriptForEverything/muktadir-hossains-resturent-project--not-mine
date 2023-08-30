@@ -41,12 +41,12 @@ const page = () => {
                   {cartItem.quantity === 1 ? (
                     <DeleteForeverIcon
                       sx={{ fontSize: 18 }}
-                      onClick={() => removeCartItem(cartItem._id,cartData,setCartData)}
+                      onClick={() => removeCartItem(cartItem._id,cartData,setCartData,"cartItems")}
                     />
                   ) : (
                     <RemoveIcon
                       sx={{ fontSize: 15 }}
-                      onClick={() => decrementCartQuantity(cartItem._id,cartData, setCartData)}
+                      onClick={() => decrementCartQuantity(cartItem._id,cartData, setCartData,"cartItems")}
                     />
                   )}
                 </button>
@@ -56,7 +56,7 @@ const page = () => {
                 <button className="bg-green-500 hover:bg-green-600 text-white font-bold  rounded pb-1">
                   <AddIcon
                     sx={{ fontSize: 15 }}
-                    onClick={() => addToCartHandler(cartItem, cartData,setCartData)}
+                    onClick={() => addToCartHandler(cartItem, cartData,setCartData, "cartItems")}
                   />
                 </button>
               </div>

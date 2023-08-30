@@ -72,7 +72,7 @@ const Cart = ({cartData, setCartData}) => {
                               removeCartItem(
                                 cartItem._id,
                                 cartData,
-                                setCartData
+                                setCartData,"cartItems"
                               )
                             }
                           />
@@ -96,7 +96,7 @@ const Cart = ({cartData, setCartData}) => {
                         <AddIcon
                           sx={{ fontSize: 15 }}
                           onClick={() =>
-                            addToCartHandler(cartItem, cartData, setCartData)
+                            addToCartHandler(cartItem, cartData, setCartData,"cartItems")
                           }
                         />
                       </button>

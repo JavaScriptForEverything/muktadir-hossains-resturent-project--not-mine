@@ -25,31 +25,34 @@ export const calculateSubtotal = (cartData) => {
 };
 
 // Add to cart Handler::
-export const addToCartHandler = (product, cartData, setCartData) => {
+export const addToCartHandler = (product, cartData, setCartData,keyName) => {
+  if(!product){
+    return;
+  }
+
   const existingCartItem = cartData.find((item) => item._id === product._id);
 
   if (existingCartItem) {
     const updatedCartItems = cartData.map((item) =>
       item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
     );
-    console.log("add to local storage")
-    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+    localStorage.setItem(keyName, JSON.stringify(updatedCartItems));
     setCartData(updatedCartItems);
   } else {
-    localStorage.setItem("cartItems", JSON.stringify([...cartData, { ...product, quantity: 1 }]));
+    localStorage.setItem(keyName, JSON.stringify([...cartData, { ...product, quantity: 1 }]));
     setCartData([...cartData, { ...product, quantity: 1 }]);
   }
 };
 
 // Remove Items form CART::
-export const removeCartItem = (productId,cartData,setCartData) => {
+export const removeCartItem = (productId,cartData,setCartData ,keyName) => {
   const updatedCartItems = cartData.filter((item) => item._id !== productId);
-  localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+  localStorage.setItem(keyName, JSON.stringify(updatedCartItems));
   setCartData(updatedCartItems);
 };
 
 // Decrement cart item quantity Handler::
-export const decrementCartQuantity = (productId, cartData, setCartData) => {
+export const decrementCartQuantity = (productId, cartData, setCartData, keyName) => {
   const updatedCartItems = cartData.map((item) => {
     if (item._id === productId) {
       return {
@@ -59,7 +62,7 @@ export const decrementCartQuantity = (productId, cartData, setCartData) => {
     }
     return item;
   });
-  localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+  localStorage.setItem(keyName, JSON.stringify(updatedCartItems));
   setCartData(updatedCartItems);
 };
 

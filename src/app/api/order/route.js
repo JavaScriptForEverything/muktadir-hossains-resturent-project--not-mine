@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 // Connect to DB::
 connectToDB();
 
-// Create  A Post ::
+// Create  An Order ::
 export const POST = async (req, res) => {
   try {
     const reqData = await req.json();
