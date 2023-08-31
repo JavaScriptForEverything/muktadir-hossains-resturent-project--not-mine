@@ -86,3 +86,12 @@ export const calculatePayableAmount = (
 export const calculateVat = (subtotal, vatPercentage) => {
   return subtotal * (vatPercentage / 100);
 };
+
+
+
+// ================= *** ================== //
+//               Verify Token               //
+// ================= *** ================== //
+
+
+

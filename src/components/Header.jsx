@@ -25,6 +25,7 @@ import Colors from "@/assets/Colors";
 import { Button } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 const drawerWidth = 250;
 const openedMixin = (theme) => ({
@@ -110,9 +111,29 @@ export default function MiniDrawer() {
   const handelLogOut = async () => {
     try {
       const res = await axios.get(`/api/users/logout`);
-      res.status === 200 && router.push("/login");
+      if(res.status === 200){
+        // Success Toast::
+        toast.success("Logged Out successfullt", {
+          style: {
+            background: Colors.success,
+            color: Colors.black,
+            borderRadius: 5,
+          },
+          duration: 1000,
+        });
+        router.push("/login");
+      }
     } catch (error) {
       console.log(error);
+              // Success Toast::
+              toast.success(`${error.message}`, {
+                style: {
+                  background: Colors.error,
+                  color: Colors.black,
+                  borderRadius: 5,
+                },
+                duration: 3000,
+              });
     }
   };
 
@@ -143,7 +164,7 @@ export default function MiniDrawer() {
           <Typography className="font-mono" variant="h6" noWrap component="div">
           Restaurant Management System
           </Typography>
-
+          <Toaster />
           <Button
             style={{
               color: Colors.white,

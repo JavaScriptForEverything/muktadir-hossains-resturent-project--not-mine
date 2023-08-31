@@ -1,14 +1,16 @@
 import Link from "next/link";
 import FoodItemCard from "../FoodItemCard";
 
-const MenuAreaWrapper = ({ allFoodItems }) => {
+const MenuAreaWrapper = ({ allFoodItems:allFoodItemsJSON }) => {
+  // Convert String to JSON
+  const allFoodItems = JSON.parse(allFoodItemsJSON);
   return (
     <section className="container mx-auto w-9/12 md:pb-2 pb-20 relative">
       <h2 className="text-center font-bold text-4xl mb-5">
         Explore Food by category
       </h2>
       {/* Food Category Section::  ::START::*/}
-      <div className="grid grid-cols-6 gap-2 mx-2 sticky top-0 z-10  bg-white p-2 shadow-sm shadow-neutral-300">
+      <div className="grid grid-cols-6 gap-2 md:mx-2 sticky top-0 z-10  bg-white p-2 shadow-sm shadow-neutral-300">
         {allFoodItems.map((cat, id) => {
           return (
             cat.itemsInTheCategory.length > 0 && (

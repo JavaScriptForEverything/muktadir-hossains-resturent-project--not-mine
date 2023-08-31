@@ -16,6 +16,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
+import Colors from "@/assets/Colors";
+import OrderSlip from "@/components/order-slip/OrderSlip";
 
 const OrderPage = () => {
   const [orderItems, setOrderItems] = useState([]);
@@ -40,11 +42,13 @@ const OrderPage = () => {
         setTableNumber(null);
         localStorage.setItem("adminOrder", JSON.stringify([]));
         // success toast::
-        toast.success("Success! Here is your toast.", {
+        toast.success(res?.data?.message, {
           style: {
-            background: "green", // Background color for success toast
-            color: "white", // Text color for success toast
+            background: Colors.success,
+            color: Colors.black,
+            borderRadius: 5,
           },
+          duration: 3000,
         });
       }
     } catch (error) {
@@ -52,9 +56,11 @@ const OrderPage = () => {
       // Error TOast
       toast.error(`${error.message}`, {
         style: {
-          background: "red", // Background color for success toast
-          color: "white", // Text color for success toast
+          background: Colors.error,
+          color: Colors.black,
+          borderRadius: 5,
         },
+        duration: 3000,
       });
     } finally {
       setSubmitting(false);
@@ -73,7 +79,7 @@ const OrderPage = () => {
   } = useDataFetching("/api/menu-items");
 
   const tableData = tables?.allTables;
-  const items = foodItems.data;
+  const items = foodItems?.data;
 
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("adminOrder"))) {
@@ -84,169 +90,129 @@ const OrderPage = () => {
   return (
     <>
       <Toaster />
-      <h2 className="text-center text-indigo-600 text-4xl font-medium">
-        Manage All Orders
-      </h2>
-      <div className="w-8/12 mx-auto">
-        <h3>Create An Order</h3>
-        <Box
-          component="form"
-          sx={{
-            "& .MuiTextField-root": { m: 1 },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <div>
-            {/* Select Table Number:: */}
-            <Autocomplete
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={tableData}
-              onChange={(event, newValue) => setTableNumber(newValue.tableCode)}
-              sx={{ width: 350 }}
-              getOptionLabel={(option) => `${option.tableCode}`}
-              renderOption={(props, option) => {
-                return (
-                  <li {...props} key={option._id}>
-                    {option.tableCode}
-                  </li>
-                );
-              }}
-              renderInput={(params) => (
-                <TextField
-                  placeholder="Select table number"
-                  {...params}
-                  label="Select Table"
-                />
-              )}
-            />
-            {/* Food Items */}
-            <Autocomplete
-              clearOnBlur={true}
-              size="small"
-              disablePortal
-              id="combo-box-demo"
-              options={items}
-              onChange={(event, newValue) =>
-                addToCartHandler(
-                  newValue,
-                  orderItems,
-                  setOrderItems,
-                  "adminOrder"
-                )
-              }
-              sx={{ width: 350 }}
-              getOptionLabel={(option) =>
-                `${option.itemCode} - ${option.title}`
-              }
-              renderOption={(props, option) => {
-                return (
-                  <li {...props} key={option._id}>
-                    {option.title} - {option.itemCode}
-                  </li>
-                );
-              }}
-              renderInput={(params) => (
-                <TextField
-                  placeholder="Select Dish"
-                  {...params}
-                  label="Select Dish"
-                />
-              )}
-            />
-          </div>
-          <div>
-            <button
-              className="py-3 px-5 m-2 text-white rounded-md bg-red-500 hover:bg-red-600"
-              onClick={(event) => submitOrderHandler(event)}
-            >
-              {!submitting ? "Submit" : "Submitting..."}
-            </button>
-          </div>
-        </Box>
-      </div>
+      <div className="">
+        <div className="mx-auto">
+          <h2 className="text-center text-indigo-600 text-4xl font-medium">
+            Manage All Orders
+          </h2>
+          <h3>Create An Order</h3>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1 },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              {/* Select Table Number:: */}
+              <Autocomplete
+                disabled={tablesLoading}
+                size="small"
+                disablePortal
+                id="combo-box-table-number"
+                options={tables?.allTables}
+                onChange={(event, newValue) =>
+                  setTableNumber(newValue.tableCode)
+                }
+                sx={{ width: 300 }}
+                getOptionLabel={(option) => `${option.tableCode}`}
+                renderOption={(props, option) => {
+                  return (
+                    <li {...props} key={option._id}>
+                      {option.tableCode}
+                    </li>
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    placeholder="Select table number"
+                    {...params}
+                    label="Select Table"
+                  />
+                )}
+              />
+              {/* Food Items */}
+              <Autocomplete
+                disabled={foodItemsLoading}
+                size="small"
+                disablePortal
+                id="combo-box-food-item-selector"
+                options={foodItems?.data}
+                onChange={(event, newValue) =>
+                  addToCartHandler(
+                    newValue,
+                    orderItems,
+                    setOrderItems,
+                    "adminOrder"
+                  )
+                }
+                sx={{ width: 300 }}
+                getOptionLabel={(option) =>
+                  `${option.itemCode} - ${option.title}`
+                }
+                renderOption={(props, option) => {
+                  return (
+                    <li {...props} key={option._id}>
+                      {option.title} - {option.itemCode}
+                    </li>
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    placeholder="Select Dish"
+                    {...params}
+                    label="Select Dish"
+                  />
+                )}
+              />
 
-      <h2 className="text-3xl text-center text-red-600">My ordered Items:</h2>
-      <p>
-        Table No. <b>{tableNumber}</b>
-      </p>
-      <div>
-        {orderItems &&
-          orderItems.map((item, Idx) => {
-            return (
-              <div
-                key={item._id}
-                className={`flex justify-between items-center pb-3 ${
-                  Idx !== orderItems.length - 1
-                    ? "border-b border-gray-300"
-                    : ""
-                }`}
-              >
-                <div className="text-xs font-mono font-medium">
-                  {item.title}
-                </div>
-                {/* ::Items Qty Area:: */}
-                <div>
-                  <h1 className="text-semibold font-semibold mb-4 text-center">
-                    TK.{" "}
-                    <span className="font-mono">
-                      {item.price * item.quantity}
-                    </span>
-                  </h1>
-                  <div className="flex items-center justify-around">
-                    <button className="bg-red-500 hover:bg-red-600 text-white font-bold  rounded pb-1">
-                      {item.quantity === 1 ? (
-                        <DeleteForeverIcon
-                          sx={{ fontSize: 18 }}
-                          onClick={() =>
-                            removeCartItem(
-                              item._id,
-                              orderItems,
-                              setOrderItems,
-                              "adminOrder"
-                            )
-                          }
-                        />
-                      ) : (
-                        <RemoveIcon
-                          sx={{ fontSize: 15 }}
-                          onClick={() =>
-                            decrementCartQuantity(
-                              item._id,
-                              orderItems,
-                              setOrderItems,
-                              "adminOrder"
-                            )
-                          }
-                        />
-                      )}
-                    </button>
-                    <span className="mx-4 text-sm bg-slate-200 p-1 rounded font-semibold">
-                      {item.quantity}
-                    </span>
-                    <button className="bg-green-500 hover:bg-green-600 text-white font-bold  rounded pb-1">
-                      <AddIcon
-                        sx={{ fontSize: 15 }}
-                        onClick={() =>
-                          addToCartHandler(
-                            item,
-                            orderItems,
-                            setOrderItems,
-                            "adminOrder"
-                          )
-                        }
-                      />
-                    </button>
-                  </div>
-                </div>
+              <TextField
+                required
+                sx={{ width: 300 }}
+                size="small"
+                id="outlined-required"
+                label="Number of Guest"
+                defaultValue={1}
+              />
 
-                {/* :: Qty Area Ends :: */}
+              <TextField
+                sx={{ width: 300 }}
+                size="small"
+                id="outlined-required"
+                label="Order Date"
+                defaultValue={new Date().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              />
+
+              <div className="flex justify-start mt-2">
+                <button
+                  className="py-2 px-3 m-2 text-white rounded-md bg-red-500 hover:bg-red-600"
+                  onClick={(event) => submitOrderHandler(event)}
+                >
+                  {!submitting ? "Submit" : "Submitting..."}
+                </button>
               </div>
-            );
-          })}
+            </div>
+          </Box>
+        </div>
+        <div className="">
+          {orderItems.length > 0 && (
+            <OrderSlip
+              cartData={orderItems}
+              setCartData={setOrderItems}
+              keyName={"adminOrder"}
+            />
+          )}
+        </div>
       </div>
+
+      {/* <p>
+        Table No. <b>{tableNumber}</b>
+      </p> */}
     </>
   );
 };

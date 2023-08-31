@@ -8,9 +8,12 @@ connectToDB();
 export default async function Home() {
   const allFoodItems = await getFullFoodMenu();
 
+  /// ::Convert JSON to String  to avoid warning:: ///
+  const allFoodItemsJSON = JSON.stringify(allFoodItems);
+
   return (
     <main className="min-h-screen bg-slate-100 relative">
-      <OrderSectionWrapper allFoodItems={allFoodItems}/>
+      <OrderSectionWrapper allFoodItems={allFoodItemsJSON} />
     </main>
   );
 }

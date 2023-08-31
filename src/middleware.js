@@ -10,6 +10,8 @@ export async function middleware(request) {
     path === "/dashboard/category" ||
     path === "/dashboard/menu-items" ||
     path === "/dashboard/settings";
+
+    
   const isPublicPath = path === "/login" || path === "/sign-up";
 
   try {

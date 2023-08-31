@@ -10,10 +10,10 @@ import {
   decrementCartQuantity,
   removeCartItem,
 } from "@/utilities/helperFunctions";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-const Cart = ({cartData, setCartData}) => {
+const OrderSlip = ({ cartData, setCartData, keyName }) => {
   const [vatPercentage, setVatPercentage] = useState(0);
   const [discount, setDiscount] = useState(null);
   const [discountType, setDiscountType] = useState(null);
@@ -31,12 +31,17 @@ const Cart = ({cartData, setCartData}) => {
   }, []);
 
   return (
-    <section className="bg-white w-3/12 relative shadow-2xl shadow-slate-500 z-[100] md:block hidden p-5">
-      <div className="sticky top-0">
-        <h3 className="text-center text-2xl font-semibold text-red-500 mb-2 pt-2">
-          Your order
+    <section className="bg-white p-5 mb-5">
+      <div className="">
+        <h3 className="text-center text-2xl font-semibold text-red-500 pt-2">
+          {keyName === "adminOrder" ? "Order Slip" : "Your Order"}
         </h3>
         <div className="max-h-60 overflow-y-auto px-2">
+          <div className="flex justify-between items-center pb-3">
+            <h2>Item Code</h2>
+            <h2 className="text-left">Item Title</h2>
+            <h2>Item Price</h2>
+          </div>
           {cartData.length > 0 ? (
             cartData.map((cartItem, Idx) => {
               return (
@@ -48,6 +53,9 @@ const Cart = ({cartData, setCartData}) => {
                       : ""
                   }`}
                 >
+                  <div className="text-sm font-mono font-medium">
+                    {cartItem.itemCode}
+                  </div>
                   <div className="text-sm font-mono font-medium">
                     {cartItem.title}
                   </div>
@@ -68,7 +76,8 @@ const Cart = ({cartData, setCartData}) => {
                               removeCartItem(
                                 cartItem._id,
                                 cartData,
-                                setCartData,"cartItems"
+                                setCartData,
+                                keyName
                               )
                             }
                           />
@@ -79,7 +88,8 @@ const Cart = ({cartData, setCartData}) => {
                               decrementCartQuantity(
                                 cartItem._id,
                                 cartData,
-                                setCartData
+                                setCartData,
+                                keyName
                               )
                             }
                           />
@@ -92,7 +102,12 @@ const Cart = ({cartData, setCartData}) => {
                         <AddIcon
                           sx={{ fontSize: 15 }}
                           onClick={() =>
-                            addToCartHandler(cartItem, cartData, setCartData,"cartItems")
+                            addToCartHandler(
+                              cartItem,
+                              cartData,
+                              setCartData,
+                              keyName
+                            )
                           }
                         />
                       </button>
@@ -154,11 +169,11 @@ const Cart = ({cartData, setCartData}) => {
           </p>
         </div>
         <button className="bg-red-600 hover:bg-red-700 rounded-md py-2 px-5 text-white font-mono block mx-auto mt-4 ">
-          <Link href="/cart">Review Order</Link>
+          <Link href="/cart">Submit Order</Link>
         </button>
       </div>
     </section>
   );
 };
 
-export default Cart;
+export default OrderSlip;

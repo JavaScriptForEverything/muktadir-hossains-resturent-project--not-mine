@@ -6,6 +6,7 @@ import useInput from "@/hooks/useInput";
 import { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Colors from "@/assets/Colors";
+import toast, { Toaster } from "react-hot-toast";
 
 const Login = () => {
   const router = useRouter();
@@ -29,11 +30,27 @@ const Login = () => {
       if (res.data.success === true && res?.data?.token) {
         // Save token to cookies with a key 'token' (you can use any key name you prefer)
         // Cookies.set("Ltoken", res.data.token);
-        console.log("ttttttttttt")
+        // success toast::
+        toast.success("Login Successful !", {
+          style: {
+            background: Colors.success,
+            color: Colors.black,
+            borderRadius: 5,
+          },
+          duration: 1000,
+        });
         router.push("/dashboard");
       }
     } catch (error) {
-      console.log(error);
+      // error toast::
+      toast.error("Login Failed!!!", {
+        style: {
+          background: Colors.error,
+          color: Colors.black,
+          borderRadius: 5,
+        },
+        duration: 3000,
+      });
     } finally {
       setIsSendingRequest(false);
     }
@@ -41,6 +58,7 @@ const Login = () => {
 
   return (
     <div className="flex h-screen justify-center items-center">
+      <Toaster />
       <form onSubmit={submitHandler}>
         <div className="bg-gray-300 p-8 rounded-lg w-full">
           <h2 className="text-center py-3 mb-4 text-xl font-semibold">

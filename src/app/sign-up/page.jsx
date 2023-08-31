@@ -73,7 +73,7 @@ const SignUp = () => {
                 type="text"
                 name="firstName"
                 id="firstName"
-                placeholder="Enter your First Name here..."
+                placeholder="Enter First Name..."
                 required
                 className="mt-1 p-2 block w-full rounded-md border border-gray-300 focus:ring-green-500 focus:border-green-500 placeholder:grey-500::placeholder text-sm"
                 onChange={inputChangeHandler}

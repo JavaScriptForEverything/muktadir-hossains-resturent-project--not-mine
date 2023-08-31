@@ -5,8 +5,10 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { LoadingButton } from "@mui/lab";
 import SaveIcon from "@mui/icons-material/Save";
-import { fetchApiData } from "@/utilities/helperFunctions";
 import axios from "axios";
+import useInput from "@/hooks/useInput";
+import toast, { Toaster } from "react-hot-toast";
+import Colors from "@/assets/Colors";
 
 const Settings = () => {
   const [loading, setLoading] = useState(false);
@@ -14,34 +16,16 @@ const Settings = () => {
   // Initial From Values::
   const initialData = {
     vatPercentage: 0,
-    discount: {
-      value: 0,
-      type: "",
-    },
+    discount_value: 0,
+    discount_type: "",
   };
-  const [configData, setConfigData] = useState(initialData);
-  console.log(configData);
-  // On Change Handler::
-  const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-  
-    if (name === "vatPercentage") {
-      setConfigData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    } else if (name === "discount__amount" || name === "discount__type") {
-      setConfigData((prevState) => ({
-        ...prevState,
-        discount: {
-          ...prevState.discount,
-          [name.split("__")[1]]: value,
-        },
-      }));
-    }
-  };
-  
-  
+
+  const {
+    input: configData,
+    inputChangeHandler,
+    setInput: setConfigData,
+  } = useInput(initialData);
+
   // GET Configurations from the DB::
   useEffect(() => {
     // fetch configuration from the DB::
@@ -50,10 +34,8 @@ const Settings = () => {
       .then((data) => {
         setConfigData({
           vatPercentage: data?.configurations?.vatPercentage,
-          discount: {
-            value: data?.configurations?.discount?.value,
-            type: data?.configurations?.discount?.type,
-          },
+          discount_value: data?.configurations?.discount_value,
+          discount_type: data?.configurations?.discount_type,
         });
       });
   }, []);
@@ -61,11 +43,30 @@ const Settings = () => {
   // Submit Button Handler::
   const handelSaveButton = async () => {
     try {
-      console.log(configData);
+      setLoading(true);
       const res = await axios.post(`/api/configurations`, configData);
-      console.log(res);
+
+      if (res.status === 200) {
+        // Success Toast
+        toast.success(`${res.data.message}`, {
+          style: {
+            background: Colors.success,
+            color: Colors.black,
+            borderRadius: 5,
+          },
+          duration: 3000,
+        });
+      }
     } catch (error) {
       console.log(error);
+      // Error Toast
+      toast.error(`${error.message}`, {
+        style: {
+          background: Colors.error,
+          color: Colors.black,
+        },
+        duration: 3000,
+      });
     } finally {
       setLoading(false);
     }
@@ -73,6 +74,7 @@ const Settings = () => {
 
   return (
     <div className="w-6/12 mx-auto py-10 mb-10">
+      <Toaster />
       <h1 className="text-3xl text-violet-600 font-semibold text-center mb-10 mt-5 font-mono">
         Edit Site Configurations here:
       </h1>
@@ -88,38 +90,34 @@ const Settings = () => {
         <TextField
           error={false}
           size="small"
-          onChange={(e) => onChangeHandler(e)}
+          onChange={(e) => inputChangeHandler(e)}
           name="vatPercentage"
-          id="outlined-error"
+          id="outlined-error-1"
           label="VAT Percentage (%)"
-          defaultValue={
-            configData?.vatPercentage ? configData.vatPercentage : 0
-          }
+          value={configData?.vatPercentage ? configData.vatPercentage : 0}
         />
         <br />
         <TextField
           size="small"
           error={false}
-          onChange={(e) => onChangeHandler(e)}
-          name="discount__amount"
+          onChange={(e) => inputChangeHandler(e)}
+          name="discount_value"
           id="outlined-error"
           label="Discount"
-          defaultValue={
-            configData?.discount?.value ? configData?.discount?.value : 0
-          }
+          defaultValue={0}
+          value={configData?.discount_value ? configData?.discount_value : 0}
         />
 
         <TextField
           size="small"
-          id="outlined-select-currency"
+          id="outlined-select-discount-type"
           select
           label="Select Discount Type"
-          onChange={(e) => onChangeHandler(e)}
-          name="discount__type"
+          onChange={(e) => inputChangeHandler(e)}
+          name="discount_type"
+          defaultValue={0}
           value={
-            configData?.discount?.type
-              ? configData?.discount?.type
-              : "percentage"
+            configData?.discount_type ? configData?.discount_type : "percentage"
           }
         >
           <MenuItem value="fixed">Fixed</MenuItem>

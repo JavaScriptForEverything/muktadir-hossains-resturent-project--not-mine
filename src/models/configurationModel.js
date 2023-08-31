@@ -7,16 +7,14 @@ const ConfigurationSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    discount: {
-      value: {
-        type: Number,
-        default: 0,
-      },
-      type: {
-        type: String,
-        enum: ['percentage', 'fixed'],
-        default: 'percentage',
-      },
+    discount_value: {
+      type: Number,
+      default: 0,
+    },
+    discount_type: {
+      type: String,
+      enum: ["percentage", "fixed"],
+      default: "percentage",
     },
   },
   {
