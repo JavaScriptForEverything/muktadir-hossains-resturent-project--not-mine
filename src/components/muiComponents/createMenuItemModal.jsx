@@ -13,7 +13,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 800,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "1px solid #000",
   boxShadow: 24,
   p: 4,
 };
@@ -95,7 +95,7 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
     <div>
       <div className="flex justify-end">
         <button
-          className="mb-5 bg-violet-600 text-white hover:bg-violet-800 px-1 py-2 rounded-sm"
+          className="mb-5 bg-violet-600 text-white hover:bg-violet-800 p-2 rounded-md"
           onClick={handleOpen}
         >
           Create Menu Item
@@ -109,8 +109,8 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
       >
         <Box sx={style}>
           <div className="mx-auto w-1/2">
-            <h2>Create New Menu</h2>
-            <form>
+            <h2 className="text-violet-600 text-center text-xl font-semibold">Create New Menu</h2>
+            <form className="pb-8">
               <div className="flex flex-col pt-2">
                 <label htmlFor="title">Title</label>
                 <input
@@ -184,7 +184,7 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
               </div>
               <button
                 onClick={() => handelSubmit(event)}
-                className="bg-violet-500 text-white mt-5 hover:bg-violet-700 rounded-sm px-2 py-2 mx-auto text-center"
+                className="bg-violet-500 text-white mt-5 hover:bg-violet-700 rounded-md px-2 py-2 mx-auto text-center"
               >
                 Add Menu Item
               </button>

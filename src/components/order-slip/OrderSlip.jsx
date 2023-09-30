@@ -13,7 +13,13 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-const OrderSlip = ({ cartData, setCartData, keyName }) => {
+const OrderSlip = ({
+  cartData,
+  setCartData,
+  keyName,
+  adminOrderSlip,
+  submitOrderHandler,
+}) => {
   const [vatPercentage, setVatPercentage] = useState(0);
   const [discount, setDiscount] = useState(null);
   const [discountType, setDiscountType] = useState(null);
@@ -36,12 +42,15 @@ const OrderSlip = ({ cartData, setCartData, keyName }) => {
         <h3 className="text-center text-2xl font-semibold text-red-500 pt-2">
           {keyName === "adminOrder" ? "Order Slip" : "Your Order"}
         </h3>
-        <div className="max-h-60 overflow-y-auto px-2">
-          <div className="flex justify-between items-center pb-3">
-            <h2>Item Code</h2>
-            <h2 className="text-left">Item Title</h2>
-            <h2>Item Price</h2>
-          </div>
+        <div className="max-h-96 overflow-y-auto px-2 relative">
+          {/* If admin order slip show this area */}
+          {!adminOrderSlip ? (
+            <div className="flex justify-between items-center sticky top-0 mb-2 text-xl font-semibold bg-white border-b border-b-gray-500">
+              <h2 className=" ">Item Code</h2>
+              <h2 className="text-center">Dish</h2>
+              <h2>Price</h2>
+            </div>
+          ) : null}
           {cartData.length > 0 ? (
             cartData.map((cartItem, Idx) => {
               return (
@@ -168,9 +177,16 @@ const OrderSlip = ({ cartData, setCartData, keyName }) => {
             Tk.
           </p>
         </div>
-        <button className="bg-red-600 hover:bg-red-700 rounded-md py-2 px-5 text-white font-mono block mx-auto mt-4 ">
-          <Link href="/cart">Submit Order</Link>
-        </button>
+
+        {!adminOrderSlip && (
+          <button
+            className="bg-red-600 hover:bg-red-700 rounded-md py-2 px-5 text-white font-mono block mx-auto mt-4 
+          "
+            onClick={(event) => submitOrderHandler(event)}
+          >
+            <Link href="/cart">Submit Order</Link>
+          </button>
+        )}
       </div>
     </section>
   );

@@ -35,7 +35,9 @@ export default function CreateCategoryModal({handelSubmit,open, setOpen,inputCha
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className="rounded-md">
-          <form className="flex justify-center items-center flex-col" onSubmit={()=>handelSubmit(event,input)}>
+          <form className="flex justify-center items-center flex-col pb-8" 
+          onSubmit={()=>handelSubmit(event,input)}
+          >
             <div className="flex flex-col w-1/2">
               <label htmlFor="categoryName" className="text-2xl">Category Name</label>
               <input
@@ -50,7 +52,8 @@ export default function CreateCategoryModal({handelSubmit,open, setOpen,inputCha
               />
             </div>
 
-            <button  className="bg-violet-500 hover:bg-violet-600 w-1/4 mt-5 py-2 px-2 rounded-md block text-white text-sm">
+            <button 
+            className="bg-violet-500 hover:bg-violet-600 w-1/4 mt-5 py-2 px-2 rounded-md block text-white text-sm">
               Add Category
             </button>
           </form>

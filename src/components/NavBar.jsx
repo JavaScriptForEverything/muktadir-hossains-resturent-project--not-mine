@@ -18,6 +18,7 @@ function NavBar() {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link href="/" className="flex items-center">
           <Image
+            // src={"/rms-logo-navbar.png"}
             src={"/rms-logo.svg"}
             height={32}
             width={32}

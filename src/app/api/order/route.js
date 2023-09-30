@@ -12,6 +12,7 @@ connectToDB();
 export const POST = async (req, res) => {
   try {
     const reqData = await req.json();
+    const { orderStatus, tableCode, numberOfGuest } = reqData;
 
     // Verify Token From cookies::
     const loginToken =
@@ -51,15 +52,18 @@ export const POST = async (req, res) => {
 
     // Calculating VAT::
     const vat = vatPercentage ? (subTotal * vatPercentage) / 100 : 0;
-
+    // Calculate total payment amount::
     const payableAmount = Math.ceil(subTotal + vat - discount);
-
+    // Create order ::
     const response = await Order.create({
       ...reqData,
-      SubTotalPrice: subTotal,
+      subTotalPrice: subTotal,
       payableAmount,
       vat,
       discount,
+      tableCode:tableCode,
+      numberOfGuest,
+      orderStatus,
     });
 
     return NextResponse.json({

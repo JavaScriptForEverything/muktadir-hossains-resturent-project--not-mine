@@ -79,10 +79,11 @@ export const POST = async (req, res) => {
 
 export const GET = async (req, res) => {
   try {
-    const allMenuItems = await MenuItems.find().populate({
-      path: "category",
-      select: "-createdAt -updatedAt -_id",
-    });
+    const allMenuItems = await MenuItems.find()
+    // .populate({
+    //   path: "category",
+    //   select: "-createdAt -updatedAt -_id",
+    // });
     return NextResponse.json({
       status: true,
       data: allMenuItems,

@@ -1,20 +1,11 @@
 "use client";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import useDataFetching from "@/hooks/useDataFetching";
-
-import { useEffect, useState } from "react";
-import {
-  addToCartHandler,
-  decrementCartQuantity,
-  removeCartItem,
-} from "@/utilities/helperFunctions";
+import { addToCartHandler } from "@/utilities/helperFunctions";
 import toast, { Toaster } from "react-hot-toast";
-
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
 import axios from "axios";
 import Colors from "@/assets/Colors";
 import OrderSlip from "@/components/order-slip/OrderSlip";
@@ -23,18 +14,34 @@ const OrderPage = () => {
   const [orderItems, setOrderItems] = useState([]);
   const [tableNumber, setTableNumber] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [numberOfGuest, setNumberOfGuest] = useState(1);
 
   // Submit order Handler
   const submitOrderHandler = async (event) => {
     event.preventDefault();
+
+    if (orderItems.length < 1) {
+      // warning Toast
+      toast.error(`Sorry !, No Dish Selected.`, {
+        style: {
+          background: Colors.error,
+          color: Colors.black,
+          borderRadius: 5,
+        },
+        duration: 3000,
+      });
+      return;
+    }
     try {
       setSubmitting(true);
       const allSelectedItems = orderItems.map((i) => {
         return { ...i, foodItemUID: i._id };
       });
       const reqBody = {
-        TableCode: tableNumber,
+        tableCode: tableNumber,
         orderItems: allSelectedItems,
+        numberOfGuest,
+        orderStatus: "paid",
       };
       const res = await axios.post("/api/order", reqBody);
       if (res.status === 200) {
@@ -92,10 +99,9 @@ const OrderPage = () => {
       <Toaster />
       <div className="">
         <div className="mx-auto">
-          <h2 className="text-center text-indigo-600 text-4xl font-medium">
-            Manage All Orders
+          <h2 className="text-center text-indigo-600 text-4xl font-medium mb-2">
+            Create An Order
           </h2>
-          <h3>Create An Order</h3>
           <Box
             component="form"
             sx={{
@@ -166,7 +172,7 @@ const OrderPage = () => {
                   />
                 )}
               />
-
+              {/* Number of Guest */}
               <TextField
                 required
                 sx={{ width: 300 }}
@@ -174,9 +180,11 @@ const OrderPage = () => {
                 id="outlined-required"
                 label="Number of Guest"
                 defaultValue={1}
+                onChange={(e) => setNumberOfGuest(Number(e.target.value))}
               />
-
+              {/* Order Date */}
               <TextField
+                disabled
                 sx={{ width: 300 }}
                 size="small"
                 id="outlined-required"
@@ -187,26 +195,28 @@ const OrderPage = () => {
                   day: "numeric",
                 })}
               />
-
-              <div className="flex justify-start mt-2">
-                <button
-                  className="py-2 px-3 m-2 text-white rounded-md bg-red-500 hover:bg-red-600"
-                  onClick={(event) => submitOrderHandler(event)}
-                >
-                  {!submitting ? "Submit" : "Submitting..."}
-                </button>
-              </div>
             </div>
           </Box>
         </div>
+
         <div className="">
           {orderItems.length > 0 && (
             <OrderSlip
               cartData={orderItems}
               setCartData={setOrderItems}
               keyName={"adminOrder"}
+              adminOrderSlip={true}
+              submitOrderHandler={submitOrderHandler}
             />
           )}
+        </div>
+        <div className="flex justify-center mt-2 ">
+          <button
+            className="py-2 px-3 m-2 text-white rounded-md bg-red-500 hover:bg-red-600"
+            onClick={(event) => submitOrderHandler(event)}
+          >
+            {!submitting ? "Submit" : "Submitting..."}
+          </button>
         </div>
       </div>
 

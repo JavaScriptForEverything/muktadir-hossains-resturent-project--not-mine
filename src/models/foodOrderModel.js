@@ -3,7 +3,25 @@ import MenuItems from "./menuItemsModel";
 
 const foodOrderSchema = new mongoose.Schema(
   {
-    TableCode: {
+    orderType:{
+      type: String,
+      lowercase: true,
+      default:"by restaurant",
+      enum: {
+        values: ["by restaurant", "by customer", "by waiter"],
+        message: "{VALUE} is not supported !",
+      },
+    },
+    orderStatus:{
+      type: String,
+      lowercase: true,
+      default:"pending",
+      enum: {
+        values: ["pending", "preparing", "served","canceled","paid"],
+        message: "{VALUE} is not supported !",
+      },
+    },
+    tableCode: {
       type: String,
       trim: true,
     },
@@ -13,7 +31,7 @@ const foodOrderSchema = new mongoose.Schema(
       default: 1,
       minValue: 1,
     },
-    SubTotalPrice: {
+    subTotalPrice: {
       type: Number,
       required: [true, "Must Provide totalPrice"],
       minValue: 1,

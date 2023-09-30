@@ -31,7 +31,9 @@ const Cart = ({cartData, setCartData}) => {
   }, []);
 
   return (
-    <section className="bg-white w-3/12 relative shadow-2xl shadow-slate-500 z-[100] md:block hidden p-5">
+    <section className="bg-white w-3/12 relative shadow-2xl shadow-slate-500 z-[100] md:block hidden p-5
+    dark:bg-slate-800 dark:text-slate-200 dark:shadow-slate-700
+    ">
       <div className="sticky top-0">
         <h3 className="text-center text-2xl font-semibold text-red-500 mb-2 pt-2">
           Your order
@@ -85,7 +87,7 @@ const Cart = ({cartData, setCartData}) => {
                           />
                         )}
                       </button>
-                      <span className="mx-4 text-sm bg-slate-200 p-1 rounded font-semibold">
+                      <span className="mx-4 text-sm bg-slate-200 p-1 rounded font-semibold dark:text-slate-900">
                         {cartItem.quantity}
                       </span>
                       <button className="bg-green-500 hover:bg-green-600 text-white font-bold  rounded pb-1">
@@ -132,7 +134,7 @@ const Cart = ({cartData, setCartData}) => {
             <p className="text-sm font-medium">
               Discount {discountType === "fixed" ? "(Flat)" : "%"} :
             </p>
-            <p className="bg-green-200 px-1 py-1 rounded">
+            <p className="bg-green-200 px-1 py-1 rounded dark:text-slate-900">
               -{discount}
               {discountType === "fixed" ? " Tk" : "%"}
             </p>

@@ -10,13 +10,13 @@ const MenuAreaWrapper = ({ allFoodItems:allFoodItemsJSON }) => {
         Explore Food by category
       </h2>
       {/* Food Category Section::  ::START::*/}
-      <div className="grid grid-cols-6 gap-2 md:mx-2 sticky top-0 z-10  bg-white p-2 shadow-sm shadow-neutral-300">
+      <div className="grid grid-cols-6 gap-2 md:mx-2 sticky top-0 z-10   p-2 shadow-md shadow-neutral-300 bg-white dark:bg-slate-800 dark:shadow-slate-700">
         {allFoodItems.map((cat, id) => {
           return (
             cat.itemsInTheCategory.length > 0 && (
               <div
                 key={id}
-                className="rounded-sm p-2 bg-red-500 hover:bg-red-600 duration-300 hover:shadow-md hover:shadow-slate-500 text-white "
+                className="rounded-sm p-2 bg-red-500 hover:bg-red-600 duration-300 hover:shadow-sm hover:shadow-slate-500 text-white  hover:dark:shadow-slate-600"
               >
                 <Link href={`/#${cat._id}`}>
                   <p className="text-center font-mono text-xs">{cat.categoryName}</p>
@@ -32,7 +32,7 @@ const MenuAreaWrapper = ({ allFoodItems:allFoodItemsJSON }) => {
       {allFoodItems.map((cat, Idx) => (
         <div key={Idx} className="px-5 pb-2" id={`${cat._id}`}>
           {cat.itemsInTheCategory.length > 0 && (
-            <h3 className={`text-3xl text-center font-semibold text-red-500`}>
+            <h3 className={`text-3xl text-center font-semibold pt-5 text-red-500 dark:text-indigo-200`}>
               {cat.categoryName}
             </h3>
           )}
