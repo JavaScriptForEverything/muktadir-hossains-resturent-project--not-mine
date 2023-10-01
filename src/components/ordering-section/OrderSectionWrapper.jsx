@@ -11,6 +11,7 @@ const OrderSectionWrapper = ({ allFoodItems }) => {
 
   return (
     <div className="flex justify-between dark:bg-hero-pattern">
+     
       {/* All Food Items category:: */}
       <MenuAreaWrapper allFoodItems={allFoodItems} />
       {/* Right Side Cart:: */}

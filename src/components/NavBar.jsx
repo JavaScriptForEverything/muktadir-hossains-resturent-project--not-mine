@@ -59,7 +59,7 @@ function NavBar() {
         <div
           className={`${
             !hidden ? "hidden" : null
-          }   w-full md:block md:w-auto md:flex md:items-center`}
+          }   w-full  md:w-auto md:flex md:items-center`}
           id="navbar-default"
         >
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700 md:items-center">

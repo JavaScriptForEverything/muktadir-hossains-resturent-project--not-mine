@@ -1,13 +1,43 @@
-import Order from "@/models/foodOrderModel";
-import React from "react";
+"use client";
+import ReportsDataTable from "@/components/muiComponents/ReportsDataTable";
+import OrderViewCard from "@/components/order/orderViewCard";
+import useGetApiResponse from "@/hooks/useGetApiResponse";
+import { useEffect } from "react";
 
-const reportPage = async () => {
-  const totalOrder = await Order.find();
+const reportPage = () => {
+  const {
+    data: apiData,
+    error,
+    loading,
+  } = useGetApiResponse("/api/reports/all");
+
   return (
-    <div className="h-full">
-      <h2 className="text-center">Report Page</h2>
-      <h3>Total orders:{totalOrder.length}</h3>
-      <div>
+    <>
+      <h2 className="text-center text-5xl my-3 font-bold">Report Page</h2>
+      {/* Main Area:: */}
+      {apiData && (
+        <div className="grid grid-cols-4 gap-5">
+          <OrderViewCard title="Total Order" count={apiData?.totalOrders} />
+          <OrderViewCard title="Paid Order" count={apiData?.paidOrdersCount} />
+          <OrderViewCard
+            title="Pending Orders"
+            count={apiData?.pendingOrdersCount}
+          />
+          <OrderViewCard
+            title="Canceled Order"
+            count={apiData?.canceledOrders.length}
+          />
+        </div>
+      )}
+      {/* Main Area:: */}
+      {/* Data Table Here:: */}
+      {apiData && (
+        <div className="mt-5">
+          <ReportsDataTable data={apiData?.allOrders} />
+        </div>
+      )}
+
+      {/* {apiData &&<div>
         <table className="w-5/6 mx-auto table-auto">
           <thead>
             <tr className="border-b border-b-black">
@@ -18,7 +48,7 @@ const reportPage = async () => {
             </tr>
           </thead>
           <tbody>
-            {totalOrder.map((order) => {
+            {(apiData?.allOrders).map((order) => {
               // console.log(order);
               return (
                 <tr key={order._id} className="border-b border-b-slate-300">
@@ -26,7 +56,7 @@ const reportPage = async () => {
                   <td>{order.orderStatus}</td>
                   <td>{order.payableAmount}</td>
                   <td className="text-sm">
-                    {order.createdAt?.toLocaleDateString("en-US", {
+                    {new Date(order?.createdAt)?.toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
@@ -37,8 +67,8 @@ const reportPage = async () => {
             })}
           </tbody>
         </table>
-      </div>
-    </div>
+      </div>} */}
+    </>
   );
 };
 

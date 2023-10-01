@@ -15,7 +15,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
 import axios from "axios";
 
-export default function DataTable({ data, fetchData }) {
+export default function ReportsDataTable({ data, fetchData }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -55,32 +55,61 @@ export default function DataTable({ data, fetchData }) {
               <TableCell
                 align="left"
                 style={{
-                  minWidth: 100,
+                  minWidth: 50,
                   fontWeight: "bold",
-                  fontSize: 18,
+                  fontSize: 12,
                 }}
               >
-                Serial No.
+                Serial
+              </TableCell>
+              <TableCell
+                align="left"
+                style={{
+                  minWidth: 100,
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+              >
+                Table
+              </TableCell>
+              <TableCell
+                align="left"
+                style={{
+                  minWidth: 150,
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+              >
+                Platter Name
               </TableCell>
               <TableCell
                 align="left"
                 style={{
                   minWidth: 400,
                   fontWeight: "bold",
-                  fontSize: 18,
+                  fontSize: 12,
                 }}
               >
                 Platter Name
               </TableCell>
               <TableCell
-                align="center"
+                align="left"
                 style={{
                   minWidth: 200,
                   fontWeight: "bold",
-                  fontSize: 18,
+                  fontSize: 12,
                 }}
               >
                 Actions
+              </TableCell>
+              <TableCell
+                align="left"
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+              >
+                Status
               </TableCell>
             </TableRow>
           </TableHead>
@@ -88,39 +117,43 @@ export default function DataTable({ data, fetchData }) {
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, Idx) => {
+                const { orderStatus } = row;
+                let statusColor;
+                switch (orderStatus) {
+                  case "pending":
+                    statusColor = "bg-red-300";
+                    break;
+                  case "preparing":
+                    statusColor = "bg-red-500";
+                    break;
+                  case "served":
+                    statusColor = "bg-orange-500";
+                    break;
+                  case "canceled":
+                    statusColor = "bg-slate-400 text-white";
+                    break;
+                  case "paid":
+                    statusColor = "bg-orange-300";
+                    break;
+                  default:
+                    statusColor = "bg-slate-200";
+                }
+
                 return (
                   <TableRow hover role="checkbox" tabIndex={1} key={Idx}>
                     <TableCell align="left">{Idx + 1}</TableCell>
-                    <TableCell align="left">{row.categoryName}</TableCell>
-                    <TableCell
-                      style={{
-                        minWidth: 200,
-                        fontWeight: "bold",
-                        fontSize: 18,
-                      }}
-                      align="center"
-                    >
-                      <IconButton
-                        onClick={() => handleButtonClick(row._id)}
-                        aria-label="view"
-                        size="large"
-                      >
-                        <VisibilityIcon color="success" />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => handleButtonClick(row._id)}
-                        aria-label="view"
-                        size="large"
-                      >
-                        <SaveAsRoundedIcon color="warning" />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => deleteCategoryHandler(row._id)}
-                        aria-label="view"
-                        size="large"
-                      >
-                        <DeleteIcon color="error" />
-                      </IconButton>
+                    <TableCell align="left">
+                      <span className="bg-slate-200 p-1 rounded">
+                        {row.tableCode ? row.tableCode : "N/A"}
+                      </span>
+                    </TableCell>
+                    <TableCell align="left">{row.discount}</TableCell>
+                    <TableCell align="left">{row.payableAmount}</TableCell>
+                    <TableCell align="left">{row.discount}</TableCell>
+                    <TableCell align="left">
+                      <span className={`${statusColor} p-1 rounded`}>
+                        {orderStatus.toUpperCase()}
+                      </span>
                     </TableCell>
                   </TableRow>
                 );
@@ -129,7 +162,7 @@ export default function DataTable({ data, fetchData }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 100, 1000]}
+        rowsPerPageOptions={[10, 25, 50, 100, 150, 1000]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}

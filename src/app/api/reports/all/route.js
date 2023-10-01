@@ -1,5 +1,8 @@
+import connectToDB from "@/config/connectDb";
 import Order from "@/models/foodOrderModel";
 import { NextResponse } from "next/server";
+
+connectToDB()
 
 export const GET = async (req, res) => {
   try {

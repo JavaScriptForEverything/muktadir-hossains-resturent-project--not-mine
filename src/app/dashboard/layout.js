@@ -4,14 +4,14 @@ import { Box, Typography } from "@mui/material";
 const DashboardLayout = ({ children }) => {
   return (
     <>
-      <Box sx={{ display: "flex"}}>
+      <Box className="bg-slate-100" sx={{ display: "flex" }}>
         <Header />
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           {/* ==  Main Area Starts == */}
           {children}
           {/* ==  Main Area Ends == */}
-          <footer className="bg-white font-mono w-full">
+          <footer className="bg-slate-100 font-mono w-full">
             <hr />
             <p className="copyRightText text-left">
               Copyright © {new Date().getFullYear()} | Developed & Maintained By{" "}
