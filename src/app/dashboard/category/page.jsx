@@ -11,6 +11,7 @@ const categoryPage = () => {
 
   const {input, inputChangeHandler, setInput} = useInput({categoryName:""});
 
+  // Fetch all Categories::
   const fetchData = () => {
     fetch("/api/category")
       .then((res) => res.json())
@@ -19,6 +20,7 @@ const categoryPage = () => {
       .catch((err) => console.log(err));
   };
 
+  // Create a new category::
   const handelSubmit = async (event, input) => {
     event.preventDefault();
     const response = await axios.post(`/api/category/create`, input);

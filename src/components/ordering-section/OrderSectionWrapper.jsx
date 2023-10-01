@@ -10,7 +10,7 @@ const OrderSectionWrapper = ({ allFoodItems }) => {
   const { cartData, setCartData } = useContext(CartContext);
 
   return (
-    <div className="flex justify-between ">
+    <div className="flex justify-between dark:bg-hero-pattern">
       {/* All Food Items category:: */}
       <MenuAreaWrapper allFoodItems={allFoodItems} />
       {/* Right Side Cart:: */}

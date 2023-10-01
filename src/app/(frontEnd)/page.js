@@ -12,7 +12,7 @@ export default async function Home() {
   const allFoodItemsJSON = JSON.stringify(allFoodItems);
 
   return (
-    <main className="min-h-screen bg-slate-100 relative dark:bg-slate-900 dark:text-slate-200">
+    <main className="min-h-screen bg-slate-100 relative dark:bg-slate-900 dark:text-slate-200 ">
       <OrderSectionWrapper allFoodItems={allFoodItemsJSON} />
     </main>
   );

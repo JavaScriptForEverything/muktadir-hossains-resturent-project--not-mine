@@ -4,6 +4,8 @@ import CartContext from "./CartContext";
 const cartContextProvider = ({ children }) => {
   const [cartData, setCartData] = useState([]);
 
+  
+
   useEffect(() => {
     if (JSON.parse(localStorage.getItem("cartItems"))) {
       setCartData(JSON.parse(localStorage.getItem("cartItems")));

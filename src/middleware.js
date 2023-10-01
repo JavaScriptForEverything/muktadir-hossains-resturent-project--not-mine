@@ -1,18 +1,24 @@
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 import verifyJWT from "./utilities/verifyJWT";
 
 export async function middleware(request) {
   const path = request.nextUrl.pathname;
 
-  const isProtectedPath =
-    path === "/dashboard" ||
-    path === "/dashboard/category" ||
-    path === "/dashboard/menu-items" ||
-    path === "/dashboard/settings";
+  // Protected Path Array::
+  const protectedPaths = [
+    "/dashboard",
+    "/dashboard/category",
+    "/dashboard/menu-items",
+    "/api/reports/all",
+    "/dashboard/settings",
+  ];
+  const isProtectedPath = protectedPaths.includes(path);
 
-    
-  const isPublicPath = path === "/login" || path === "/sign-up";
+  // =========== Public Paths =================
+  // Public Path Array
+  const publicPaths = ["/login", "/sign-up"];
+  const isPublicPath = publicPaths.includes(path);
+  // =========== Public Paths =================
 
   try {
     const token =
@@ -21,7 +27,6 @@ export async function middleware(request) {
       token,
       process.env.ACCESS_TOKEN_SECRET
     );
-    // console.log("Middleware::",verifiedToken)
     // Check if the path is protected or not ::
     if (isPublicPath && verifiedToken) {
       return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
@@ -35,7 +40,7 @@ export async function middleware(request) {
   }
 }
 
-// See "Matching Paths" below to learn more
+// See "Matching Paths" below to Apply Logic::
 export const config = {
   matcher: [
     "/",
@@ -45,5 +50,6 @@ export const config = {
     "/dashboard/category",
     "/dashboard/menu-items",
     "/dashboard/settings",
+    "/api/reports/all",
   ],
 };

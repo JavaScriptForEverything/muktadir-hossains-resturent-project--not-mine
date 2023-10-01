@@ -3,6 +3,7 @@ import ClientFooter from "@/components/footer/ClientFooter";
 import ContextWrapper from "../context/ContextWrapper";
 
 
+
 export default function ClientLayout({ children }) {
   return (
     <html lang="en">

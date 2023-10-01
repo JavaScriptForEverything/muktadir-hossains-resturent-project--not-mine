@@ -5,6 +5,7 @@ import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 
 
 const listItems = [
@@ -54,7 +55,7 @@ const listItems = [
     id: 6,
     title: "Reports",
     link: "/dashboard/reports",
-    icon: <TextSnippetIcon />,
+    icon: <QueryStatsIcon />,
     active: false,
   },
 ];
