@@ -13,7 +13,7 @@ import {
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 
-const Cart = ({cartData, setCartData}) => {
+const Cart = ({ cartData, setCartData }) => {
   const [vatPercentage, setVatPercentage] = useState(0);
   const [discount, setDiscount] = useState(null);
   const [discountType, setDiscountType] = useState(null);
@@ -31,9 +31,11 @@ const Cart = ({cartData, setCartData}) => {
   }, []);
 
   return (
-    <section className="bg-white w-3/12 relative shadow-2xl shadow-slate-500 z-[100] md:block hidden p-5
-    dark:bg-slate-800 dark:text-slate-200 dark:shadow-slate-700
-    ">
+    <section
+      className="bg-white w-3/12 relative shadow-2xl shadow-slate-500 z-[100] md:block hidden p-5
+    dark:bg-slate-800 dark:text-slate-200 dark:shadow-black dark:shadow-xl
+    "
+    >
       <div className="sticky top-0">
         <h3 className="text-center text-2xl font-semibold text-red-500 mb-2 pt-2">
           Your order
@@ -70,7 +72,8 @@ const Cart = ({cartData, setCartData}) => {
                               removeCartItem(
                                 cartItem._id,
                                 cartData,
-                                setCartData,"cartItems"
+                                setCartData,
+                                "cartItems"
                               )
                             }
                           />
@@ -94,7 +97,12 @@ const Cart = ({cartData, setCartData}) => {
                         <AddIcon
                           sx={{ fontSize: 15 }}
                           onClick={() =>
-                            addToCartHandler(cartItem, cartData, setCartData,"cartItems")
+                            addToCartHandler(
+                              cartItem,
+                              cartData,
+                              setCartData,
+                              "cartItems"
+                            )
                           }
                         />
                       </button>
@@ -155,7 +163,7 @@ const Cart = ({cartData, setCartData}) => {
             Tk.
           </p>
         </div>
-        <button className="bg-red-600 hover:bg-red-700 rounded-md py-2 px-5 text-white font-mono block mx-auto mt-4 ">
+        <button className="btn btn-red">
           <Link href="/cart">Review Order</Link>
         </button>
       </div>

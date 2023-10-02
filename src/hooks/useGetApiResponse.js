@@ -11,7 +11,7 @@ function useGetApiResponse(url) {
     const fetchData = async () => {
       try {
         const response = await axios.get(url);
-        // console.log(response)
+        // console.log(response.data)
         setData(response.data);
       } catch (err) {
         console.error(err);

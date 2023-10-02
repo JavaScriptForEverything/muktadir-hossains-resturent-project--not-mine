@@ -2,8 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===========================
+Edit Tailwind CSS Here:: 
+==============================
+*/
 
-.MuiBox-root{
+@layer components {
+  .btn {
+    @apply rounded-md py-2 px-5
+    text-white
+     font-mono 
+     block
+     mx-auto
+     mt-4;
+  }
+  .btn-red {
+    @apply bg-red-600
+    hover:bg-red-700
+    dark:bg-red-500
+    hover:dark:bg-red-600;
+  }
+  .btn-yellow {
+    @apply bg-yellow-500
+    hover:bg-yellow-700
+    dark:bg-yellow-500
+    hover:dark:bg-yellow-600
+    dark:text-black;
+  }
+}
+
+/* ===========================
+Tailwind Customization End here:: 
+==============================
+*/
+
+.MuiBox-root {
   padding-bottom: 0 !important;
 }
 
@@ -11,13 +44,12 @@
 Copy Right Section design:: 
 ==============================
 */
-.copyRightText{
+.copyRightText {
   display: block;
   /* text-align: left; */
   font-size: 12px;
   padding-bottom: 10px;
   padding-top: 5px;
-
 }
 
 /* ===========================
@@ -25,10 +57,10 @@ Table Design Section in dashboard/table Page::
 ==============================
 */
 
-.table__body{
+.table__body {
   position: relative;
 }
-.cross__bar{
+.cross__bar {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -43,7 +75,7 @@ Table Design Section in dashboard/table Page::
 ==== *** ===== *** ====
   Scrollbar Design::
 ==== *** ===== *** ====
-*/ 
+*/
 
 /* width */
 ::-webkit-scrollbar {
@@ -52,18 +84,18 @@ Table Design Section in dashboard/table Page::
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; 
+  background: #f1f1f1;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: #888;
   border-radius: 50px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #ef4444d0; 
+  background: #ef4444d0;
 }
 
 /* 

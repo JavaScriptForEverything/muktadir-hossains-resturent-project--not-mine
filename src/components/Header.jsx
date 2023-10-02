@@ -25,9 +25,9 @@ import Colors from "@/assets/Colors";
 import { Button } from "@mui/material";
 import { useRouter, usePathname } from "next/navigation";
 import axios from "axios";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 
-const drawerWidth = 250;
+const drawerWidth = 200;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -35,8 +35,8 @@ const openedMixin = (theme) => ({
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: "hidden",
-  boxShadow:"1px 1px 8px #c9c9c9"
-}); 
+  boxShadow: "1px 1px 8px #c9c9c9",
+});
 
 const closedMixin = (theme) => ({
   transition: theme.transitions.create("width", {
@@ -48,7 +48,7 @@ const closedMixin = (theme) => ({
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  boxShadow:"1px 1px 8px #c9c9c9"
+  boxShadow: "1px 1px 8px #c9c9c9",
 });
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
@@ -111,7 +111,7 @@ export default function MiniDrawer() {
   const handelLogOut = async () => {
     try {
       const res = await axios.get(`/api/users/logout`);
-      if(res.status === 200){
+      if (res.status === 200) {
         // Success Toast::
         toast.success("Logged Out successfullt", {
           style: {
@@ -125,15 +125,15 @@ export default function MiniDrawer() {
       }
     } catch (error) {
       console.log(error);
-              // Success Toast::
-              toast.success(`${error.message}`, {
-                style: {
-                  background: Colors.error,
-                  color: Colors.black,
-                  borderRadius: 5,
-                },
-                duration: 3000,
-              });
+      // Success Toast::
+      toast.success(`${error.message}`, {
+        style: {
+          background: Colors.error,
+          color: Colors.black,
+          borderRadius: 5,
+        },
+        duration: 3000,
+      });
     }
   };
 
@@ -162,7 +162,7 @@ export default function MiniDrawer() {
           </IconButton>
 
           <Typography className="font-mono" variant="h6" noWrap component="div">
-          Restaurant Management System
+            Restaurant Management System
           </Typography>
           <Toaster />
           <Button
@@ -170,7 +170,7 @@ export default function MiniDrawer() {
               color: Colors.white,
               fontWeight: 600,
               backgroundColor: "#6D28D9",
-              fontSize: 12
+              fontSize: 12,
             }}
             variant="contained"
             endIcon={<LogoutIcon />}
@@ -180,7 +180,7 @@ export default function MiniDrawer() {
           </Button>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} >
+      <Drawer variant="permanent" open={open}>
         <DrawerHeader
           sx={{
             display: "flex",
@@ -198,12 +198,16 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {open && (
-            <Typography className="font-mono text-violet-600" ml={3} component={"p"}>
+            <Typography
+              className="font-mono text-violet-600"
+              ml={3}
+              component={"p"}
+            >
               Dashboard
             </Typography>
           )}
           {list.map((El, Idx) => (
-            <ListItem key={Idx} disablePadding sx={{ display: "block",}}>
+            <ListItem key={Idx} disablePadding sx={{ display: "block" }}>
               <Link href={El.link}>
                 <ListItemButton
                   sx={{
@@ -222,19 +226,30 @@ export default function MiniDrawer() {
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
-                      color: El.link === pathname && Colors.white,
+                      color: El.link === pathname ? Colors.white : Colors.primary,
                     }}
                   >
                     {El.icon}
                   </ListItemIcon>
-                  <ListItemText
+                  <p
+                    className="font-mono font-medium text-sm text-slate-700"
+                    style={{
+                      opacity: open ? 1 : 0,
+                      width: !open && 0,
+                      color: El.link === pathname && Colors.white,
+                    }}
+                  >
+                    {El.title}
+                  </p>
+                  {/* <ListItemText
                     primary={El.title}
                     sx={{
                       opacity: open ? 1 : 0,
                       color: El.link === pathname && Colors.white,
-                      fontWeight: "bold",
+                      fontWeight: 700,
+                      fontSize: 5
                     }}
-                  />
+                  /> */}
                 </ListItemButton>
               </Link>
             </ListItem>

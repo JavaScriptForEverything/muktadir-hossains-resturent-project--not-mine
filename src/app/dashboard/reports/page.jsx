@@ -1,20 +1,41 @@
 "use client";
 import ReportsDataTable from "@/components/muiComponents/ReportsDataTable";
 import OrderViewCard from "@/components/order/orderViewCard";
+import ErrorWrapper from "@/components/small/ErrorWrapper";
 import useGetApiResponse from "@/hooks/useGetApiResponse";
-import { useEffect } from "react";
+import Pagination from "@mui/material/Pagination";
+import Image from "next/image";
+import { useState } from "react";
 
 const reportPage = () => {
-  const {
-    data: apiData,
-    error,
-    loading,
-  } = useGetApiResponse("/api/reports/all");
+  const [url, setUrl] = useState(`/api/reports/all?page=1&limit=10`);
+
+  const { data: apiData, error, loading } = useGetApiResponse(url);
+
+  // Handle Pagination::
+  const handelPagination = (event, page) => {
+    setUrl(`/api/reports/all?page=${page}&limit=10`);
+  };
 
   return (
     <>
-      <h2 className="text-center text-5xl my-3 font-bold">Report Page</h2>
+      <h2 className="text-center text-3xl my-3 font-bold">Report Page</h2>
       {/* Main Area:: */}
+
+      {
+        // ::Handel Loading Here::
+        loading && 
+        <div className="flex justify-center items-center bg-white h-[50vh]">
+          <Image height={128} width={128} src={'/design/loading-chart.gif'} alt="Loading..." />
+        </div>
+      }
+
+      {
+        // ::Handel Error Here::
+        error && <ErrorWrapper error={error} />
+      }
+
+      {/* :: Report Cards Area Here:: */}
       {apiData && (
         <div className="grid grid-cols-4 gap-5">
           <OrderViewCard title="Total Order" count={apiData?.totalOrders} />
@@ -29,45 +50,28 @@ const reportPage = () => {
           />
         </div>
       )}
-      {/* Main Area:: */}
-      {/* Data Table Here:: */}
+
+      {/* :: Data Table Here:: */}
       {apiData && (
         <div className="mt-5">
           <ReportsDataTable data={apiData?.allOrders} />
+
+          {/* 
+          Check if there are more than 100 
+          Orders to show Pagination:: */}
+
+          {apiData?.totalPages > 100 && (
+            <div className="flex justify-center mt-10 mb-5">
+              <Pagination
+                onChange={handelPagination}
+                count={apiData?.totalPages}
+                variant="outlined"
+                shape="rounded"
+              />
+            </div>
+          )}
         </div>
       )}
-
-      {/* {apiData &&<div>
-        <table className="w-5/6 mx-auto table-auto">
-          <thead>
-            <tr className="border-b border-b-black">
-              <th className="text-left w-3/12">State</th>
-              <th className="text-left w-3/12">City</th>
-              <th className="text-left w-3/12">Total</th>
-              <th className="text-left w-3/12">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {(apiData?.allOrders).map((order) => {
-              // console.log(order);
-              return (
-                <tr key={order._id} className="border-b border-b-slate-300">
-                  <td>{order.orderType}</td>
-                  <td>{order.orderStatus}</td>
-                  <td>{order.payableAmount}</td>
-                  <td className="text-sm">
-                    {new Date(order?.createdAt)?.toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>} */}
     </>
   );
 };

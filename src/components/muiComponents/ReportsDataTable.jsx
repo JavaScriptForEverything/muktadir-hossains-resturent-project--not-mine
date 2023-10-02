@@ -8,14 +8,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-// For Icons::
-import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
-import axios from "axios";
 
-export default function ReportsDataTable({ data, fetchData }) {
+export default function ReportsDataTable({
+  data
+}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -28,24 +24,6 @@ export default function ReportsDataTable({ data, fetchData }) {
     setPage(0);
   };
 
-  // delete Category Handler::
-  const deleteCategoryHandler = async (id) => {
-    try {
-      const res = await axios.delete(`/api/category/${id}`);
-      if (res.status === 200) {
-        fetchData();
-        alert("Deleted Successfully");
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  const handleButtonClick = (rowId) => {
-    // Implement your desired action here for the buttons
-    alert(`Button clicked for row with ID: ${rowId}`);
-  };
-
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -55,7 +33,7 @@ export default function ReportsDataTable({ data, fetchData }) {
               <TableCell
                 align="left"
                 style={{
-                  minWidth: 50,
+                  // minWidth: 50,
                   fontWeight: "bold",
                   fontSize: 12,
                 }}
@@ -65,7 +43,7 @@ export default function ReportsDataTable({ data, fetchData }) {
               <TableCell
                 align="left"
                 style={{
-                  minWidth: 100,
+                  // minWidth: 100,
                   fontWeight: "bold",
                   fontSize: 12,
                 }}
@@ -75,32 +53,42 @@ export default function ReportsDataTable({ data, fetchData }) {
               <TableCell
                 align="left"
                 style={{
-                  minWidth: 150,
+                  // minWidth: 150,
                   fontWeight: "bold",
                   fontSize: 12,
                 }}
               >
-                Platter Name
+                Sub Total
               </TableCell>
               <TableCell
                 align="left"
                 style={{
-                  minWidth: 400,
+                  // minWidth: 100,
                   fontWeight: "bold",
                   fontSize: 12,
                 }}
               >
-                Platter Name
+                Discount
               </TableCell>
               <TableCell
                 align="left"
                 style={{
-                  minWidth: 200,
+                  // minWidth: 100,
                   fontWeight: "bold",
                   fontSize: 12,
                 }}
               >
-                Actions
+                VAT
+              </TableCell>
+              <TableCell
+                align="left"
+                style={{
+                  // minWidth: 200,
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+              >
+                Net Total
               </TableCell>
               <TableCell
                 align="left"
@@ -111,6 +99,15 @@ export default function ReportsDataTable({ data, fetchData }) {
               >
                 Status
               </TableCell>
+              <TableCell
+                align="left"
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+              >
+                Date
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -118,22 +115,23 @@ export default function ReportsDataTable({ data, fetchData }) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row, Idx) => {
                 const { orderStatus } = row;
+                // Choose Order Status Color::
                 let statusColor;
                 switch (orderStatus) {
                   case "pending":
-                    statusColor = "bg-red-300";
+                    statusColor = "bg-lime-400";
                     break;
                   case "preparing":
-                    statusColor = "bg-red-500";
+                    statusColor = "bg-green-400";
                     break;
                   case "served":
                     statusColor = "bg-orange-500";
                     break;
-                  case "canceled":
-                    statusColor = "bg-slate-400 text-white";
-                    break;
                   case "paid":
-                    statusColor = "bg-orange-300";
+                    statusColor = "bg-green-700 text-white";
+                    break;
+                  case "canceled":
+                    statusColor = "bg-slate-900 text-white";
                     break;
                   default:
                     statusColor = "bg-slate-200";
@@ -143,17 +141,25 @@ export default function ReportsDataTable({ data, fetchData }) {
                   <TableRow hover role="checkbox" tabIndex={1} key={Idx}>
                     <TableCell align="left">{Idx + 1}</TableCell>
                     <TableCell align="left">
-                      <span className="bg-slate-200 p-1 rounded">
+                      <span className="bg-slate-300 p-1 rounded">
                         {row.tableCode ? row.tableCode : "N/A"}
                       </span>
                     </TableCell>
                     <TableCell align="left">{row.discount}</TableCell>
                     <TableCell align="left">{row.payableAmount}</TableCell>
                     <TableCell align="left">{row.discount}</TableCell>
+                    <TableCell align="left">{row.discount}</TableCell>
                     <TableCell align="left">
-                      <span className={`${statusColor} p-1 rounded`}>
+                      <span className={`${statusColor} p-1 rounded text-xs`}>
                         {orderStatus.toUpperCase()}
                       </span>
+                    </TableCell>
+                    <TableCell align="left">
+                      {new Date(row.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
                     </TableCell>
                   </TableRow>
                 );
@@ -162,7 +168,7 @@ export default function ReportsDataTable({ data, fetchData }) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 25, 50, 100, 150, 1000]}
+        rowsPerPageOptions={[10, 25, 100, 1000]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}

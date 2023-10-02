@@ -15,7 +15,7 @@ function NavBar() {
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 dark:border-b dark:border-b-slate-700">
-      <div className="max-w-screen-xl flex flex-wrap md:items-center items-center justify-between mx-auto p-4">
+      <div className="max-w-screen-xl flex flex-wrap md:items-center items-center justify-between mx-auto p-4 md:py-1">
         <Link href="/" className="flex items-center">
           <Image
             // src={"/rms-logo-navbar.png"}

@@ -4,7 +4,8 @@ const Colors ={
     primary: "#4F47E4",
     grey:'grey',
     success:'#BBF7D0',
-    error:"#FECACA"
+    error:"#FECACA",
+    violet : "#7C3AED"
 }
 
 export default Colors
