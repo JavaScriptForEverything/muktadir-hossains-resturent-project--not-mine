@@ -10,6 +10,7 @@ export async function middleware(request) {
     "/dashboard/category",
     "/dashboard/menu-items",
     "/dashboard/settings",
+    "/dashboard/order"
   ];
   const isProtectedPath = protectedPaths.includes(path);
 
@@ -49,5 +50,6 @@ export const config = {
     "/dashboard/category",
     "/dashboard/menu-items",
     "/dashboard/settings",
+    "/dashboard/order"
   ],
 };

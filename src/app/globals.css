@@ -29,6 +29,13 @@ Edit Tailwind CSS Here::
     hover:dark:bg-yellow-600
     dark:text-black;
   }
+  .btn-dash-primary {
+    @apply bg-violet-700
+    hover:bg-violet-900
+    dark:bg-violet-500
+    hover:dark:bg-violet-600
+    /* dark:text-black; */;
+  }
 }
 
 /* ===========================
@@ -103,3 +110,8 @@ Table Design Section in dashboard/table Page::
   Scrollbar Design End::
 ==== *** ===== *** ====
 */
+
+/* Add this style to make the DatePicker smaller */
+.smallDatePicker .MuiInputBase-root {
+  font-size: 16px; /* Adjust the font size to make the input smaller */
+}

@@ -6,12 +6,6 @@ const OrderViewCard = ({ title, count }) => {
       case "Pending Orders":
         bgColor = "bg-lime-400";
         break;
-      case "preparing":
-        bgColor = "bg-green-400";
-        break;
-      case "served":
-        bgColor = "bg-orange-500";
-        break;
       case "Paid Order":
         bgColor = "bg-green-600 text-white";
         break;
@@ -19,7 +13,7 @@ const OrderViewCard = ({ title, count }) => {
         bgColor = "bg-slate-900 text-white";
         break;
       case "Total Order":
-        bgColor = "bg-slate-900 text-white";
+        bgColor = "bg-slate-700 text-white";
         break;
       default:
         bgColor = "bg-slate-200";

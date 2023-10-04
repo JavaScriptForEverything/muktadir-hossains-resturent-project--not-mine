@@ -1,6 +1,5 @@
 import connectToDB from "@/config/connectDb";
 import Order from "@/models/foodOrderModel";
-import { useSearchParams } from "next/navigation";
 import { NextResponse } from "next/server";
 
 connectToDB();
@@ -11,33 +10,48 @@ export const GET = async (req) => {
   const page = searchParams.get("page") || 1;
   const limit = searchParams.get("size") || 100;
 
+  const fromDate = searchParams.get("fromDate") || null;
+  const toDate = searchParams.get("toDate") || null;
+
+  // console.log(toDate,"test", fromDate)
+
   try {
     const totalCount = await Order.countDocuments();
     const totalPages = Math.ceil(totalCount / limit);
 
-    const allOrders = await Order.find()
+    let allOrders;
+    allOrders = await Order.find()
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const paidOrders = await Order.find({ orderStatus: "paid" });
-    const pendingOrders = await Order.find({ orderStatus: "pending" });
+
+    // if (toDate && fromDate) {
+    // allOrders = await Order.find({
+    //   date: {
+    //     $gte: fromDate,
+    //     $lte: toDate,
+    //   },
+    // });
+    // }
+
+    const paidOrdersCount = await Order.countDocuments({ orderStatus: "paid" });
+
+    const pendingOrdersCount = await Order.countDocuments({ orderStatus: "pending" });
+    const canceledOrdersCount= await Order.countDocuments({ orderStatus: "canceled" });
+
     const preparingOrders = await Order.find({ orderStatus: "preparing" });
-    const canceledOrders = await Order.find({ orderStatus: "canceled" });
     const servedOrders = await Order.find({ orderStatus: "served" });
+
+
     return NextResponse.json(
       {
         page,
         size: limit,
-        status: true,
-        totalOrders: allOrders.length,
-        paidOrdersCount: paidOrders.length,
-        pendingOrdersCount: pendingOrders.length,
+        totalOrders: totalCount,
+        paidOrdersCount,
+        pendingOrdersCount,
+        canceledOrdersCount,
         allOrders,
-        paidOrders,
-        pendingOrders,
-        preparingOrders,
-        canceledOrders,
-        servedOrders,
         totalCount,
         totalPages,
       },

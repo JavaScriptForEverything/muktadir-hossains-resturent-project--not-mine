@@ -145,10 +145,10 @@ export default function ReportsDataTable({
                         {row.tableCode ? row.tableCode : "N/A"}
                       </span>
                     </TableCell>
+                    <TableCell align="left">{row.subTotalPrice}</TableCell>
                     <TableCell align="left">{row.discount}</TableCell>
+                    <TableCell align="left">{row.vat}</TableCell>
                     <TableCell align="left">{row.payableAmount}</TableCell>
-                    <TableCell align="left">{row.discount}</TableCell>
-                    <TableCell align="left">{row.discount}</TableCell>
                     <TableCell align="left">
                       <span className={`${statusColor} p-1 rounded text-xs`}>
                         {orderStatus.toUpperCase()}
