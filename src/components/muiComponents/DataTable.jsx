@@ -11,9 +11,12 @@ import TableRow from "@mui/material/TableRow";
 // For Icons::
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
+
+import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import Colors from "@/assets/Colors";
+import Link from "next/link";
 
 export default function DataTable({ data, fetchData }) {
   const [page, setPage] = React.useState(0);
@@ -34,10 +37,27 @@ export default function DataTable({ data, fetchData }) {
       const res = await axios.delete(`/api/category/${id}`);
       if (res.status === 200) {
         fetchData();
-        alert("Deleted Successfully");
+        // Show success toast::
+        toast.success("Category Deleted Successfully !!!", {
+          style: {
+            background: Colors.success,
+            color: Colors.black,
+            borderRadius: 5,
+          },
+          duration: 3000,
+        });
       }
     } catch (error) {
       alert(error.message);
+      // Show success toast::
+      toast.error("Operation Failed!!!", {
+        style: {
+          background: Colors.error,
+          color: Colors.black,
+          borderRadius: 5,
+        },
+        duration: 3000,
+      });
     }
   };
 
@@ -47,96 +67,108 @@ export default function DataTable({ data, fetchData }) {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell
-                align="left"
-                style={{
-                  minWidth: 100,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
-                Serial No.
-              </TableCell>
-              <TableCell
-                align="left"
-                style={{
-                  minWidth: 400,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
-                Platter Name
-              </TableCell>
-              <TableCell
-                align="center"
-                style={{
-                  minWidth: 200,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, Idx) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={1} key={Idx}>
-                    <TableCell align="left">{Idx + 1}</TableCell>
-                    <TableCell align="left">{row.categoryName}</TableCell>
-                    <TableCell
-                      style={{
-                        minWidth: 200,
-                        fontWeight: "bold",
-                        fontSize: 18,
+    <>
+      <Toaster />
+      <Paper
+        sx={{
+          width: "100%",
+          overflow: "hidden",
+          maxWidth: 800,
+          margin: "0 auto",
+        }}
+      >
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow sx={{ height: 40 }}>
+                <TableCell
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 14,
+                    color: Colors.primary,
+                  }}
+                >
+                  Serial No.
+                </TableCell>
+                <TableCell
+                  align="left"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 14,
+                    color: Colors.primary,
+                  }}
+                >
+                  Platter Name
+                </TableCell>
+                <TableCell
+                  align="center"
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 14,
+                    color: Colors.primary,
+                  }}
+                >
+                  Actions
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, Idx) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      key={Idx}
+                      tabIndex={1}
+                      style={{ height: 20 }}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
                       }}
-                      align="center"
                     >
-                      <IconButton
-                        onClick={() => handleButtonClick(row._id)}
-                        aria-label="view"
-                        size="large"
+                      <TableCell align="left">{Idx + 1}</TableCell>
+                      <TableCell align="left">{row.categoryName}</TableCell>
+                      {/* Modal Here:: */}
+                      <TableCell
+                        style={{
+                          minWidth: 200,
+                          fontWeight: "bold",
+                          fontSize: 18,
+                        }}
+                        align="center"
                       >
-                        <VisibilityIcon color="success" />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => handleButtonClick(row._id)}
-                        aria-label="view"
-                        size="large"
-                      >
-                        <SaveAsRoundedIcon color="warning" />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => deleteCategoryHandler(row._id)}
-                        aria-label="view"
-                        size="large"
-                      >
-                        <DeleteIcon color="error" />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100, 1000]}
-        component="div"
-        count={data.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+                        <Link href={`/dashboard/category/edit/${row._id}`}>
+                          <IconButton aria-label="view" size="large">
+                            <SaveAsRoundedIcon color="warning" />
+                          </IconButton>
+                        </Link>
+
+                        <IconButton
+                          onClick={() => deleteCategoryHandler(row._id)}
+                          aria-label="view"
+                          size="large"
+                        >
+                          <DeleteIcon color="error" />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100, 500, 1000]}
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </>
   );
 }

@@ -16,8 +16,13 @@ const style = {
   borderRadius: "5px",
 };
 
-export default function CreateCategoryModal({handelSubmit,open, setOpen,inputChangeHandler,input}) {
-
+export default function CreateCategoryModal({
+  handelSubmit,
+  open,
+  setOpen,
+  inputChangeHandler,
+  input,
+}) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
@@ -35,11 +40,14 @@ export default function CreateCategoryModal({handelSubmit,open, setOpen,inputCha
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className="rounded-md">
-          <form className="flex justify-center items-center flex-col pb-8" 
-          onSubmit={()=>handelSubmit(event,input)}
+          <form
+            className="flex justify-center items-center flex-col pb-8"
+            onSubmit={() => handelSubmit(event, input)}
           >
-            <div className="flex flex-col w-1/2">
-              <label htmlFor="categoryName" className="text-2xl">Category Name</label>
+            <div className="flex flex-col justify-between w-1/2">
+              <label htmlFor="categoryName" className="text-xl pb-6 block">
+                Category Name
+              </label>
               <input
                 className="mt-1 p-2 block w-full rounded-md border-grey-500 border-2
                 focus:ring-green-500 placeholder:grey-500::placeholder text-sm"
@@ -52,8 +60,7 @@ export default function CreateCategoryModal({handelSubmit,open, setOpen,inputCha
               />
             </div>
 
-            <button 
-            className="bg-violet-500 hover:bg-violet-600 w-1/4 mt-5 py-2 px-2 rounded-md block text-white text-sm">
+            <button className="bg-violet-500 hover:bg-violet-600 w-1/4 mt-5 py-2 px-2 rounded-md block text-white text-sm">
               Add Category
             </button>
           </form>

@@ -95,7 +95,7 @@ const OrderPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen">
       <Toaster />
       <div className="">
         <div className="mx-auto">
@@ -219,11 +219,7 @@ const OrderPage = () => {
           </button>
         </div>
       </div>
-
-      {/* <p>
-        Table No. <b>{tableNumber}</b>
-      </p> */}
-    </>
+    </div>
   );
 };
 

@@ -22,6 +22,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "grey",
   },
+  descriptionBox:{
+    width: "60%",
+    margin: "0 auto",
+    paddingVertical: '20px'
+  }
 });
 
 function ReportPDFDoc({ reportData }) {
@@ -43,10 +48,11 @@ function ReportPDFDoc({ reportData }) {
         <Text style={{ textAlign: "center",marginTop:"30px" }}>
           Restaurant Management System
         </Text>
-        <View style={{marginLeft: "100px" }}>
-          <Text style={{ fontSize: "12px" }}>
+        
+        <View style={styles.descriptionBox}>
+          {/* <Text style={{ fontSize: "12px" }}>
             Date:{new Date().toISOString()}
-          </Text>
+          </Text> */}
           <Text style={{ fontSize: "12px" }}>
             Total Price: {totalAmount.toFixed(2)} Tk.
           </Text>

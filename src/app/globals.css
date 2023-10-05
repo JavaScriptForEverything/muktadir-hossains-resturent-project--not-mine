@@ -36,6 +36,15 @@ Edit Tailwind CSS Here::
     hover:dark:bg-violet-600
     /* dark:text-black; */;
   }
+  .btn-dashboard-sm {
+    @apply
+    font-bold 
+    font-mono 
+    text-xs 
+    rounded-md 
+    py-2 
+    px-3;
+  }
 }
 
 /* ===========================

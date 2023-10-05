@@ -15,7 +15,7 @@ import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import Colors from "@/assets/Colors";
 import ReportPDFDoc from "@/components/report/ReportPDFDoc";
-import ReportDownloadWrapper from "@/components/small/ReportDownloadWrapper";
+import ReportDownloadWrapper from "@/components/report/ReportDownloadWrapper";
 
 const reportPage = () => {
   const [fromValue, setFromValue] = useState(null);
@@ -144,6 +144,7 @@ const reportPage = () => {
             </div>
           )}
 
+          {/* Report download Area */}
           {apiData && showDownloadArea && (
               <ReportDownloadWrapper reportData={apiData?.allOrders}/>
           )}
