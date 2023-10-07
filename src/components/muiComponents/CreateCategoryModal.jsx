@@ -28,7 +28,7 @@ export default function CreateCategoryModal({
   return (
     <div>
       <button
-        className="bg-violet-600 hover:bg-violet-800 py-2 px-2 rounded-lg text-white"
+        className="btn-dash-primary btn-dashboard-sm"
         onClick={handleOpen}
       >
         Create Category

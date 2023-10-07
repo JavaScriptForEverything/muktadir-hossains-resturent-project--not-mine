@@ -73,7 +73,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="w-6/12 mx-auto py-10 mb-10">
+    <div className="min-h-screen w-6/12 mx-auto py-10 mb-10">
       <Toaster />
       <h1 className="text-3xl text-violet-600 font-semibold text-center mb-10 mt-5 font-mono">
         Edit Site Configurations here:

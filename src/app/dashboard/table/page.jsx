@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 const Table = () => {
   const [allTables, setAllTables] = useState([]);
 
+  // Get all tables data from server::
   const getAllTables = async () => {
     try {
       const allTables = await axios.get("/api/table");
@@ -19,7 +20,7 @@ const Table = () => {
   useEffect(() => {
     getAllTables();
   }, []);
-
+  // Primary Input Object::
   const primaryInput = {
     tableCode: "",
     tableCapacity: "",
@@ -27,6 +28,7 @@ const Table = () => {
   };
   const { input, inputChangeHandler, setInput } = useInput({ primaryInput });
 
+  // On submit Handler::
   const onSubmitHandler = async () => {
     event.preventDefault();
     console.log(input);
@@ -47,7 +49,7 @@ const Table = () => {
   };
 
   return (
-    <>
+    <div className="min-h-screen">
       <div>
         <h2 className="text-4xl text-center">Add New Table</h2>
         <form className="w-8/12 mx-auto">
@@ -96,14 +98,14 @@ const Table = () => {
         </form>
       </div>
       <hr className="my-6" />
-      {allTables.length>0 && (
+      {allTables.length > 0 && (
         <div className="flex justify-evenly flex-wrap border border-solid border-slate-600 py-5">
           {allTables.map((table) => (
             <TableCardComponent table={table} />
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

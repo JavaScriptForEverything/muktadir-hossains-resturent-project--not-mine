@@ -6,6 +6,7 @@ import CreateCategoryModal from "@/components/muiComponents/createCategoryModal"
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Colors from "@/assets/Colors";
+import LoadingGraph from "@/components/small/LoadingGraph";
 
 const categoryPage = () => {
   const [data, setData] = useState([]);
@@ -63,12 +64,12 @@ const categoryPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen">
       {/* ::Toaster:: */}
       <Toaster />
       <div className="flex justify-evenly align-middle mb-6">
         <div>
-          <h2 className="text-center  text-2xl text-violet-600 ">
+          <h2 className="text-center font-mono text-2xl text-primary-100 ">
             All Category
           </h2>
         </div>
@@ -84,8 +85,12 @@ const categoryPage = () => {
       </div>
       <hr />
       <br />
-      <DataTable data={data} fetchData={fetchData} />
-    </>
+      {data.length > 0 ? (
+        <DataTable data={data} fetchData={fetchData} />
+      ) : (
+        <LoadingGraph />
+      )}
+    </div>
   );
 };
 

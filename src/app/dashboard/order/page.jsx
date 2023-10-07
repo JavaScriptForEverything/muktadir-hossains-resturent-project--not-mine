@@ -99,8 +99,8 @@ const OrderPage = () => {
       <Toaster />
       <div className="">
         <div className="mx-auto">
-          <h2 className="text-center text-indigo-600 text-4xl font-medium mb-2">
-            Create An Order
+          <h2 className="title-main-dashboard">
+            Create Invoice
           </h2>
           <Box
             component="form"

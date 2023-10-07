@@ -33,26 +33,40 @@ export default function DataTable({ data, fetchData }) {
 
   // delete Category Handler::
   const deleteCategoryHandler = async (id) => {
-    try {
-      const res = await axios.delete(`/api/category/${id}`);
-      if (res.status === 200) {
-        fetchData();
+    const result = confirm("Are you sure you want to delete this item?");
+    if (result === true) {
+      // Code to execute if the user clicks OK (result is true)
+      try {
+        const res = await axios.delete(`/api/category/${id}`);
+        if (res.status === 200) {
+          fetchData();
+          // Show success toast::
+          toast.success("Category Deleted Successfully !!!", {
+            style: {
+              background: Colors.success,
+              color: Colors.black,
+              borderRadius: 5,
+            },
+            duration: 3000,
+          });
+        }
+      } catch (error) {
+        alert(error.message);
         // Show success toast::
-        toast.success("Category Deleted Successfully !!!", {
+        toast.error("Operation Failed!!!", {
           style: {
-            background: Colors.success,
+            background: Colors.error,
             color: Colors.black,
             borderRadius: 5,
           },
           duration: 3000,
         });
       }
-    } catch (error) {
-      alert(error.message);
-      // Show success toast::
-      toast.error("Operation Failed!!!", {
+    } else {
+      // Code to execute if the user clicks Cancel (result is false)
+      toast.success("Operation Canceled!!!", {
         style: {
-          background: Colors.error,
+          background: Colors.success,
           color: Colors.black,
           borderRadius: 5,
         },
@@ -61,10 +75,7 @@ export default function DataTable({ data, fetchData }) {
     }
   };
 
-  const handleButtonClick = (rowId) => {
-    // Implement your desired action here for the buttons
-    alert(`Button clicked for row with ID: ${rowId}`);
-  };
+
 
   return (
     <>

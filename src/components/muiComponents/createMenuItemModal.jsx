@@ -1,8 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 
@@ -18,25 +16,10 @@ const style = {
   p: 4,
 };
 
-export default function CreateMenuItemModal({fetchAllMenuItems}) {
+export default function CreateMenuItemModal({ fetchAllMenuItems }) {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   const [allCategory, setAllCategory] = useState([]);
-
-  const getAllCategory = async () => {
-    try {
-      const response = await axios.get("/api/category");
-      setAllCategory(response?.data?.category);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getAllCategory();
-  }, []);
+  const [img, setImg] = useState(""); //for Image Input field::
 
   const initialInputObject = {
     title: "",
@@ -45,9 +28,25 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
     category: "",
     itemCode: "",
   };
-
   const [input, setInput] = useState(initialInputObject);
-  const [img, setImg] = useState(""); //for Image Input field::
+  const handelModalToggle = () => {
+    setOpen(!open);
+  };
+
+  useEffect(() => {
+    const getAllCategory = async () => {
+      try {
+        const response = await axios.get("/api/category");
+        setAllCategory(response?.data?.category);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllCategory();
+  }, []);
+
+
+
 
   const handelChange = (e) => {
     setInput((prevState) => ({
@@ -82,9 +81,9 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
 
       console.log(response);
       if (response.status === 200) {
-        fetchAllMenuItems()
+        fetchAllMenuItems();
         setInput(initialInputObject);
-        setOpen(false)
+        setOpen(false);
       }
     } catch (error) {
       console.log("this is the error::", error);
@@ -95,21 +94,23 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
     <div>
       <div className="flex justify-end">
         <button
-          className="mb-5 bg-violet-600 text-white hover:bg-violet-800 p-2 rounded-md"
-          onClick={handleOpen}
+          className="btn-dash-primary btn-dashboard-sm my-3"
+          onClick={handelModalToggle}
         >
           Create Menu Item
         </button>
       </div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handelModalToggle}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <div className="mx-auto w-1/2">
-            <h2 className="text-violet-600 text-center text-xl font-semibold">Create New Menu</h2>
+            <h2 className="text-violet-600 text-center text-xl font-semibold">
+              Create New Menu
+            </h2>
             <form className="pb-8">
               <div className="flex flex-col pt-2">
                 <label htmlFor="title">Title</label>
@@ -153,7 +154,7 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
               </div>
               <div className="flex flex-col pt-2">
                 <label htmlFor="description">Description</label>
-                <input
+                <textarea
                   className="border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-400"
                   type="text"
                   name="description"
@@ -161,6 +162,14 @@ export default function CreateMenuItemModal({fetchAllMenuItems}) {
                   value={input.description}
                   onChange={handelChange}
                 />
+                {/* <input
+                  className="border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-400"
+                  type="text"
+                  name="description"
+                  id="description"
+                  value={input.description}
+                  onChange={handelChange}
+                /> */}
               </div>
               <div className="flex flex-col pt-2">
                 <label htmlFor="price">Price</label>

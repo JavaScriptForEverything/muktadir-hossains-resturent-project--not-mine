@@ -14,6 +14,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
 import axios from "axios";
+import Colors from "@/assets/Colors";
+import Link from "next/link";
 
 export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
   const [page, setPage] = React.useState(0);
@@ -46,60 +48,36 @@ export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
     alert(`Button clicked for row with ID: ${rowId}`);
   };
 
+  const rowStyles = {
+    fontWeight: "bold",
+    fontSize: 14,
+    color: Colors.primary,
+  };
+
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+    <Paper
+      sx={{
+        width: "100%",
+        overflow: "hidden",
+      }}
+    >
       <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell
-                align="left"
-                style={{
-                  minWidth: 100,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
+              <TableCell align="left" style={rowStyles}>
                 Serial No.
               </TableCell>
-              <TableCell
-                align="left"
-                style={{
-                  minWidth: 400,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
+              <TableCell align="left" style={rowStyles}>
                 Item Name
               </TableCell>
-              <TableCell
-                align="left"
-                style={{
-                  minWidth: 100,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
+              <TableCell align="left" style={rowStyles}>
                 Item Code
               </TableCell>
-              <TableCell
-                align="left"
-                style={{
-                  minWidth: 80,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
+              <TableCell align="left" style={rowStyles}>
                 Price
               </TableCell>
-              <TableCell
-                align="center"
-                style={{
-                  minWidth: 100,
-                  fontWeight: "bold",
-                  fontSize: 18,
-                }}
-              >
+              <TableCell align="center" style={rowStyles}>
                 Actions
               </TableCell>
             </TableRow>
@@ -122,20 +100,20 @@ export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
                       }}
                       align="center"
                     >
-                      <IconButton
-                        onClick={() => handleButtonClick(row._id)}
-                        aria-label="view"
-                        size="large"
-                      >
-                        <VisibilityIcon color="success" />
-                      </IconButton>
-                      <IconButton
-                        onClick={() => handleButtonClick(row._id)}
-                        aria-label="view"
-                        size="large"
-                      >
-                        <SaveAsRoundedIcon color="warning" />
-                      </IconButton>
+                      <Link href={`/dashboard/menu-items/item/${row._id}`}>
+                        <IconButton aria-label="view" size="large">
+                          <VisibilityIcon color="success" />
+                        </IconButton>
+                      </Link>
+                      <Link href={`/dashboard/menu-items/edit/${row._id}`}>
+                        <IconButton
+                          // onClick={() => handleButtonClick(row._id)}
+                          aria-label="view"
+                          size="large"
+                        >
+                          <SaveAsRoundedIcon color="warning" />
+                        </IconButton>
+                      </Link>
                       <IconButton
                         onClick={() => deleteMenuItemHandler(row._id)}
                         aria-label="view"

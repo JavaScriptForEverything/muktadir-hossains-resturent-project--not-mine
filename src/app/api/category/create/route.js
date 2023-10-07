@@ -7,9 +7,9 @@ connectToDB()
 export const POST = async (req, res) => {
   try {
     const { categoryName } = await req.json();
-    console.log(categoryName);
+    // console.log(categoryName);
     const category = await Category.create({categoryName})
-    console.log(category)
+    // console.log(category)
 
     return NextResponse.json({
       success: true,

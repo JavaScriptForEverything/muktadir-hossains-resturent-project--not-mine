@@ -31,19 +31,34 @@ Edit Tailwind CSS Here::
   }
   .btn-dash-primary {
     @apply bg-violet-700
+    text-white
     hover:bg-violet-900
     dark:bg-violet-500
     hover:dark:bg-violet-600
     /* dark:text-black; */;
   }
   .btn-dashboard-sm {
-    @apply
-    font-bold 
+    @apply font-bold 
     font-mono 
     text-xs 
     rounded-md 
     py-2 
     px-3;
+  }
+  .title-main-dashboard {
+    @apply text-center font-mono font-semibold text-indigo-600 text-2xl mb-2;
+  }
+  .form-input-sm {
+    @apply border 
+    px-3 
+    py-[2px] 
+    rounded-lg 
+    shadow-sm 
+    border-gray-300 
+    focus:outline-none 
+    focus:border-indigo-500 
+    focus:ring-1 
+    focus:ring-indigo-400;
   }
 }
 

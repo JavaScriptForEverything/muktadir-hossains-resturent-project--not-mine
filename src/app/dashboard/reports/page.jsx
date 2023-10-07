@@ -16,6 +16,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import Colors from "@/assets/Colors";
 import ReportPDFDoc from "@/components/report/ReportPDFDoc";
 import ReportDownloadWrapper from "@/components/report/ReportDownloadWrapper";
+import LoadingGraph from "@/components/small/LoadingGraph";
 
 const reportPage = () => {
   const [fromValue, setFromValue] = useState(null);
@@ -56,13 +57,13 @@ const reportPage = () => {
   };
 
   return (
-    <>
-      <h2 className="text-center text-3xl my-3 font-bold">Report Page</h2>
+    <div className="min-h-screen">
+      <h2 className="text-center text-2xl my-1 font-bold">Report</h2>
       {/* 
-        |===/ /====/::Date Picker ::/====|
+        ||===/ /====/::Date Picker ::/=====//======||
       */}
       <Toaster />
-      <section className="flex justify-center items-center my-8">
+      <div className="flex justify-center items-center my-8 min-w-full">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DatePicker", "DatePicker"]}>
             <DatePicker
@@ -80,21 +81,14 @@ const reportPage = () => {
             </button>
           </DemoContainer>
         </LocalizationProvider>
-      </section>
+      </div>
 
       {/* Main Area:: */}
 
       {
         // ::Handel Loading Here::
         loading && (
-          <div className="flex justify-center items-center bg-white h-[50vh]">
-            <Image
-              height={100}
-              width={100}
-              src={"/design/loading-chart.gif"}
-              alt="Loading..."
-            />
-          </div>
+          <LoadingGraph/>
         )
       }
 
@@ -150,7 +144,7 @@ const reportPage = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
