@@ -43,7 +43,6 @@ export const GET = async (req, { params: { id } }) => {
 
 // Delete Category Controller::
 export const DELETE = async (request, { params: { id } }) => {
-  console.log(id);
   try {
     const deletedCategory = await Category.findByIdAndDelete(id);
     return NextResponse.json({

@@ -1,3 +1,4 @@
+// @Food Item Table::
 "use client";
 import * as React from "react";
 import Paper from "@mui/material/Paper";
@@ -13,9 +14,11 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import SaveAsRoundedIcon from "@mui/icons-material/SaveAsRounded";
+
 import axios from "axios";
 import Colors from "@/assets/Colors";
 import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
   const [page, setPage] = React.useState(0);
@@ -32,22 +35,47 @@ export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
 
   // delete Menu Items Handler::
   const deleteMenuItemHandler = async (id) => {
-    try {
-      const res = await axios.delete(`/api/menu-items/${id}`);
-      if (res.status === 200) {
-        fetchAllMenuItems();
-        alert("Deleted Successfully");
+    const result = confirm("Are you sure you want to delete this item?");
+    if (result === true) {
+      try {
+        const res = await axios.delete(`/api/menu-items/${id}`);
+        if (res.status === 200) {
+          fetchAllMenuItems();
+          // Show success toast::
+          toast.success("Item Deleted Successfully !!!", {
+            style: {
+              background: Colors.success,
+              color: Colors.black,
+              borderRadius: 5,
+            },
+            duration: 3000,
+          });
+        }
+      } catch (error) {
+        // Show Cancel toast::
+        toast.error(error.message, {
+          style: {
+            background: Colors.error,
+            color: Colors.black,
+            borderRadius: 5,
+          },
+          duration: 3000,
+        });
       }
-    } catch (error) {
-      alert(error.message);
+    } else {
+      // Show Cancel toast::
+      toast.error("Operation Canceled!!!", {
+        style: {
+          background: Colors.error,
+          color: Colors.black,
+          borderRadius: 5,
+        },
+        duration: 3000,
+      });
     }
   };
 
-  const handleButtonClick = (rowId) => {
-    // Implement your desired action here for the buttons
-    alert(`Button clicked for row with ID: ${rowId}`);
-  };
-
+  // Row Style
   const rowStyles = {
     fontWeight: "bold",
     fontSize: 14,
@@ -55,6 +83,8 @@ export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
   };
 
   return (
+    <>
+    <Toaster/>
     <Paper
       sx={{
         width: "100%",
@@ -138,5 +168,6 @@ export default function MenuItemDataTable({ data, fetchAllMenuItems }) {
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>
+    </>
   );
 }

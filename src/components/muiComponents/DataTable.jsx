@@ -52,7 +52,7 @@ export default function DataTable({ data, fetchData }) {
         }
       } catch (error) {
         alert(error.message);
-        // Show success toast::
+        // Show Cancel toast::
         toast.error("Operation Failed!!!", {
           style: {
             background: Colors.error,

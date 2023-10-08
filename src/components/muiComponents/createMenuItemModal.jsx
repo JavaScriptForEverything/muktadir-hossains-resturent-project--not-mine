@@ -1,9 +1,11 @@
+// Food Item Modal::
 "use client";
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import axios from "axios";
 
+// modal Style
 const style = {
   position: "absolute",
   top: "50%",
@@ -162,14 +164,6 @@ export default function CreateMenuItemModal({ fetchAllMenuItems }) {
                   value={input.description}
                   onChange={handelChange}
                 />
-                {/* <input
-                  className="border border-gray-300 px-3 py-2 rounded-lg shadow-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-400"
-                  type="text"
-                  name="description"
-                  id="description"
-                  value={input.description}
-                  onChange={handelChange}
-                /> */}
               </div>
               <div className="flex flex-col pt-2">
                 <label htmlFor="price">Price</label>

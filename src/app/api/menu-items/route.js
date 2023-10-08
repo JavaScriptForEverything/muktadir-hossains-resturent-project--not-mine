@@ -6,13 +6,12 @@ import MenuItems from "@/models/menuItemsModel";
 
 connectToDB();
 
-
 // Create a Menu Item Controller::
 
 export const POST = async (req, res) => {
   try {
     const formData = await req.formData();
-    console.log(formData);
+    // console.log(formData);
     const title = formData.get("title");
     const description = formData.get("description");
     const price = formData.get("price");
@@ -26,7 +25,7 @@ export const POST = async (req, res) => {
     if (images.length > 0) {
       for (let Idx = 0; Idx < images.length; Idx++) {
         const img = images[Idx];
-        //  image processing logic
+        //  image processing logic::
         const allowedExtensions = ["png", "jpg", "jpeg"];
         const fileExtension = img.name.split(".").pop().toLowerCase();
         if (!allowedExtensions.includes(fileExtension)) {
@@ -79,7 +78,7 @@ export const POST = async (req, res) => {
 
 export const GET = async (req, res) => {
   try {
-    const allMenuItems = await MenuItems.find()
+    const allMenuItems = await MenuItems.find();
     // .populate({
     //   path: "category",
     //   select: "-createdAt -updatedAt -_id",
