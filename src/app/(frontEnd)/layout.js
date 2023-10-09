@@ -1,4 +1,4 @@
-import NavBar from "@/components/NavBar";
+import NavBar from "@/components/Header & NavBars/NavBar";
 import ClientFooter from "@/components/footer/ClientFooter";
 import ContextWrapper from "../context/ContextWrapper";
 

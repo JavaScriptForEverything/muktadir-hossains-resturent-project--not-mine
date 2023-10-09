@@ -1,4 +1,4 @@
-import Header, { DrawerHeader } from "@/components/Header";
+import Header, { DrawerHeader } from "@/components/Header & NavBars/Header";
 import { Box, Typography } from "@mui/material";
 
 const DashboardLayout = ({ children }) => {

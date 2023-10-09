@@ -32,7 +32,7 @@ const Cart = ({ cartData, setCartData }) => {
 
   return (
     <section
-      className="bg-white w-3/12 relative shadow-2xl shadow-slate-500 z-[100] md:block hidden p-5
+      className="min-h-screen bg-white w-3/12 relative shadow-2xl shadow-slate-500 z-[100] md:block hidden p-5
     dark:bg-slate-800 dark:text-slate-200 dark:shadow-black dark:shadow-xl
     "
     >

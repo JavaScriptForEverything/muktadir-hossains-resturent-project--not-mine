@@ -1,5 +1,5 @@
 import Link from "next/link";
-import FoodItemCard from "../FoodItemCard";
+import FoodItemCard from "../cards/FoodItemCard";
 
 const MenuAreaWrapper = ({ allFoodItems: allFoodItemsJSON }) => {
   // Convert String to JSON

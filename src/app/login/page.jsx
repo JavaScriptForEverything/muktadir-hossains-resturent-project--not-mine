@@ -31,7 +31,7 @@ const Login = () => {
         // Save token to cookies with a key 'token' (you can use any key name you prefer)
         // Cookies.set("Ltoken", res.data.token);
         // success toast::
-        toast.success("Login Successful !", {
+        toast.success("Logged in Successfully !", {
           style: {
             background: Colors.success,
             color: Colors.black,
