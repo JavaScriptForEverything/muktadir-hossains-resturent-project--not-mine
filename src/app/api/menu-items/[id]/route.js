@@ -8,8 +8,6 @@ import fsPromises from "fs/promises";
 
 connectToDB();
 
-let url;
-
 // GET Food Item By ID::
 export const GET = async (req, { params: { id } }) => {
   try {
@@ -18,7 +16,7 @@ export const GET = async (req, { params: { id } }) => {
     if (!foodItem) {
       throw new Error("No food item found", 404);
     }
-    return NextResponse.json({ status: true, data:foodItem});
+    return NextResponse.json({ status: true, data: foodItem });
   } catch (error) {
     return NextResponse.json(
       { error: error.message },
@@ -28,7 +26,8 @@ export const GET = async (req, { params: { id } }) => {
 };
 
 // UPDATE a food item::
-export const POST = async (req, { params: { id } },Response) => {
+export const POST = async (req, { params: { id } }, Response) => {
+
   try {
     // Check if item exists::
     const item = await MenuItems.findById(id);
@@ -53,7 +52,20 @@ export const POST = async (req, { params: { id } },Response) => {
 
     let ImageUrlArray = [];
     // If any Image exist Store It in the server & DB::
-    if (image[0].size > 0) {
+    if (image.length > 0) {
+      // ::Delete the old Image::
+      const filename = path.basename(item.images[0]);
+      const imagePath = path.join(
+        __dirname,
+        "../../../../../../public/uploads/food-items/",
+        filename
+      );
+      // Remove If img available
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+        console.log("Image deleted");
+      }
+      // Handel new Image:
       const img = image[0];
       //  image processing logic::
       const allowedExtensions = ["png", "jpg", "jpeg"];
@@ -103,10 +115,12 @@ export const POST = async (req, { params: { id } },Response) => {
       new: true,
     });
     // Redirect To the Food Items Page::
-  
-    // return NextResponse.redirect(new URL('/about', req.url))
-    return NextResponse.redirect('/')
 
+    // return NextResponse.redirect(new URL('/about', req.url))
+    return NextResponse.json({
+      status: true,
+      foodItem,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

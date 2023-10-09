@@ -51,7 +51,7 @@ const Table = () => {
   return (
     <div className="min-h-screen">
       <div>
-        <h2 className="text-4xl text-center">Add New Table</h2>
+        <h2 className="title-main-dashboard">Add New Table</h2>
         <form className="w-8/12 mx-auto">
           <div className="flex flex-col pt-2">
             <label htmlFor="tableCode">Table Code (Table Name)</label>

@@ -72,7 +72,7 @@ export default function CreateMenuItemModal({ fetchAllMenuItems }) {
       fromData.append("image", img);
 
       const response = await axios.post(
-        "http://localhost:3000/api/menu-items",
+        "/api/menu-items",
         fromData,
         {
           headers: {

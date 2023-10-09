@@ -188,6 +188,7 @@ export default function MiniDrawer() {
             alignSelf: "center",
           }}
         >
+          {/* Site Logo here */}
           <Image
             src="/next.svg"
             width={50}
@@ -215,9 +216,9 @@ export default function MiniDrawer() {
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
                     fontWeight: 700,
-                    backgroundColor: El.link === pathname && Colors.primary,
+                    backgroundColor: pathname.includes(El.exact) && Colors.primary,
                     "&:hover": {
-                      backgroundColor: El.link === pathname && Colors.primary,
+                      backgroundColor: pathname.includes(El.exact) && Colors.primary,
                     },
                   }}
                 >
@@ -226,7 +227,7 @@ export default function MiniDrawer() {
                       minWidth: 0,
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
-                      color: El.link === pathname ? Colors.white : Colors.primary,
+                      color: pathname.includes(El.exact) ? Colors.white : Colors.primary,
                     }}
                   >
                     {El.icon}
@@ -236,7 +237,7 @@ export default function MiniDrawer() {
                     style={{
                       opacity: open ? 1 : 0,
                       width: !open && 0,
-                      color: El.link === pathname && Colors.white,
+                      color: pathname.includes(El.exact) && Colors.white,
                     }}
                   >
                     {El.title}

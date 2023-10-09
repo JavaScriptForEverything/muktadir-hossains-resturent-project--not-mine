@@ -14,7 +14,7 @@ export const GET = async (req, { params: { id } }) => {
     const category = await Category.findById(id);
     // If no category is found then Throw an error::
     if (!category) {
-      throw new Error("No category found.");
+      throw new Error("No category found!");
     }
     // Update Category Here::
     const updatedCategory = await Category.findByIdAndUpdate(
