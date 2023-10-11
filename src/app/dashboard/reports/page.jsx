@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import ReportsDataTable from "@/components/muiComponents/ReportsDataTable";
-import OrderViewCard from "@/components/order/orderViewCard";
+import OrderViewCard from '@/components/order/OrderViewCard';
 import ErrorWrapper from "@/components/small/ErrorWrapper";
 import useGetApiResponse from "@/hooks/useGetApiResponse";
 import Pagination from "@mui/material/Pagination";

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import useInput from "@/hooks/useInput";
 import DataTable from "@/components/muiComponents/DataTable";
-import CreateCategoryModal from "@/components/muiComponents/createCategoryModal";
+import CreateCategoryModal from '@/components/muiComponents/CreateCategoryModal';
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Colors from "@/assets/Colors";
