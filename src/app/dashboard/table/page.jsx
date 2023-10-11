@@ -41,7 +41,6 @@ const Table = () => {
     }
     try {
       const res = await axios.post("/api/table", input);
-      console.log(res);
       if (res.data.success) {
         setInput(primaryInput);
         // success toast::

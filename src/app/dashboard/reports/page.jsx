@@ -18,7 +18,7 @@ import ReportPDFDoc from "@/components/report/ReportPDFDoc";
 import ReportDownloadWrapper from "@/components/report/ReportDownloadWrapper";
 import LoadingGraph from "@/components/small/LoadingGraph";
 
-const reportPage = () => {
+const ReportPage = () => {
   const [fromValue, setFromValue] = useState(null);
   const [toValue, setToValue] = useState(null);
   const [showDownloadArea, setShowDownloadArea] = useState(false);
@@ -148,4 +148,4 @@ const reportPage = () => {
   );
 };
 
-export default reportPage;
+export default ReportPage;

@@ -135,9 +135,9 @@ export default function DataTable({ data, fetchData }) {
                       key={Idx}
                       tabIndex={1}
                       style={{ height: 20 }}
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
+                      // sx={{
+                      //   "&:last-child td, &:last-child th": { border: 0 },
+                      // }}
                     >
                       <TableCell align="left">{Idx + 1}</TableCell>
                       <TableCell align="left">{row.categoryName}</TableCell>

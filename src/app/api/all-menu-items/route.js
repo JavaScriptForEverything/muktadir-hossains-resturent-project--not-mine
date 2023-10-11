@@ -1,7 +1,7 @@
 import connectToDB from "@/config/connectDb";
-import Category from "@/models/categoryModel";
 import getFullFoodMenu from "@/utilities/getFullFoodMenu";
 import { NextResponse } from "next/server";
+
 
 connectToDB();
 

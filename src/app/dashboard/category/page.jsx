@@ -8,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Colors from "@/assets/Colors";
 import LoadingGraph from "@/components/small/LoadingGraph";
 
-const categoryPage = () => {
+const CategoryPage = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = React.useState(false);
 
@@ -94,4 +94,4 @@ const categoryPage = () => {
   );
 };
 
-export default categoryPage;
+export default CategoryPage;

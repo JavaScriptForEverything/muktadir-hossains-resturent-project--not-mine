@@ -1,4 +1,7 @@
+import connectToDB from "@/config/connectDb";
 import Category from "@/models/categoryModel";
+
+connectToDB()
 
 const getFullFoodMenu = async () => {
   try {

@@ -4,12 +4,11 @@ import { NextResponse } from "next/server";
 
 connectToDB()
 
+// Create a Category::
 export const POST = async (req, res) => {
   try {
     const { categoryName } = await req.json();
-    // console.log(categoryName);
     const category = await Category.create({categoryName})
-    // console.log(category)
 
     return NextResponse.json({
       success: true,

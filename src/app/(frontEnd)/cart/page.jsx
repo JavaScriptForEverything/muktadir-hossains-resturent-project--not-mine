@@ -3,7 +3,7 @@ import CartContext from "@/app/context/cartContext/CartContext";
 import React, { useContext } from "react";
 import OrderSlip from "@/components/order-slip/OrderSlip";
 
-const page = () => {
+const Page = () => {
   const { cartData, setCartData } = useContext(CartContext);
   console.log(cartData);
 
@@ -14,4 +14,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

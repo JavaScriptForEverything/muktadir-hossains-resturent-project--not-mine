@@ -1,9 +1,10 @@
+"use client";
 import Link from "next/link";
 import FoodItemCard from "../cards/FoodItemCard";
 
-const MenuAreaWrapper = ({ allFoodItems: allFoodItemsJSON }) => {
+const MenuAreaWrapper = ({ allFoodItems }) => {
   // Convert String to JSON
-  const allFoodItems = JSON.parse(allFoodItemsJSON);
+  // const allFoodItems = JSON.parse(allFoodItemsJSON);
   return (
     <section className="container mx-auto w-9/12 md:pb-2 pb-20 relative">
       <h2 className="text-center font-bold text-4xl mb-5">
@@ -30,26 +31,27 @@ const MenuAreaWrapper = ({ allFoodItems: allFoodItemsJSON }) => {
       </div>
 
       {/* Food Category Section::   ::END::*/}
-
-      {allFoodItems.map((cat, Idx) => (
-        <div key={Idx} className="px-5 pb-2" id={`${cat._id}`}>
-          {cat.itemsInTheCategory.length > 0 && (
-            <h3
-              className={`text-3xl text-center font-semibold pt-5 text-red-500 dark:text-indigo-200`}
-            >
-              {cat.categoryName}
-            </h3>
-          )}
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 m-3">
-            {cat.itemsInTheCategory.map((item, Idx) => {
-              const plainItem = item.toJSON
-                ? item.toJSON()
-                : JSON.parse(JSON.stringify(item));
-              return <FoodItemCard item={plainItem} key={item._id} />;
-            })}
+      <div>
+        {allFoodItems.map((cat, Idx) => (
+          <div key={Idx} className="px-5 pb-2" id={`${cat._id}`}>
+            {cat.itemsInTheCategory.length > 0 && (
+              <h3
+                className={`text-3xl text-center font-semibold pt-5 text-red-500 dark:text-indigo-200`}
+              >
+                {cat.categoryName}
+              </h3>
+            )}
+            <div className="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 m-3">
+              {cat.itemsInTheCategory.map((item, Idx) => {
+                const plainItem = item.toJSON
+                  ? item.toJSON()
+                  : JSON.parse(JSON.stringify(item));
+                return <FoodItemCard item={plainItem} key={item._id} />;
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </section>
   );
 };
