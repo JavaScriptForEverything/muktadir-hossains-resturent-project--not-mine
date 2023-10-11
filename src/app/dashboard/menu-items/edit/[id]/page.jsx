@@ -35,7 +35,7 @@ const EditItems = ({ params }) => {
 
   useEffect(() => {
     setInputObject(menuItem?.data);
-  }, [loading]);
+  }, [menuItem]);
 
   const fromHandler = async (e) => {
     e.preventDefault();

@@ -38,7 +38,7 @@ const Settings = () => {
           discount_type: data?.configurations?.discount_type,
         });
       });
-  }, []);
+  }, [setConfigData]);
 
   // Submit Button Handler::
   const handelSaveButton = async () => {

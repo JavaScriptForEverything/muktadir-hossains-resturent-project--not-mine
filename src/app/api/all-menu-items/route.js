@@ -5,6 +5,8 @@ import { NextResponse } from "next/server";
 
 connectToDB();
 
+export const dynamic = "force-dynamic";
+
 export const GET = async () => {
   try {
     // Get All food items from the database with Aggregation::

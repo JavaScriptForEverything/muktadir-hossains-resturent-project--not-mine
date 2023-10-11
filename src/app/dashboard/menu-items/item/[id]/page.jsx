@@ -15,13 +15,13 @@ const MenuItemDataTable = async ({ params }) => {
     <div className="min-h-screen">
       <h2 className="title-main-dashboard"> {title}</h2>
       <div className="w-[380px] mx-auto my-10">
-        {/* <Image
+        <Image
           src={images[0].replace("http://localhost:3000", "")}
           height={380}
           width={380}
           alt={title}
-        /> */}
-        <img src={images[0].replace("http://localhost:3000", "")} />
+        />
+        {/* <img src={images[0].replace("http://localhost:3000", "")} /> */}
       </div>
 
       <div className="relative overflow-x-auto light">
